@@ -1,0 +1,3342 @@
+<!DOCTYPE html>
+<html lang="km">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FamilyWallet Pro | ការគ្រប់គ្រងហិរញ្ញវត្ថុគ្រួសារ</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Kantumruy+Pro:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2D5BFF;
+            --primary-dark: #1A49E0;
+            --secondary: #1E2A3B;
+            --accent: #00C896;
+            --danger: #FF4757;
+            --warning: #FF9F43;
+            --light: #F8FAFC;
+            --dark: #0F172A;
+            --gray: #64748B;
+            --gray-light: #E2E8F0;
+            --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            --radius: 16px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --gradient: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            --gradient-accent: linear-gradient(135deg, var(--accent), #00A87A);
+        }
+        [data-theme="dark"] {
+            --light: #0f172a;
+            --dark: #f1f5f9;
+            --gray-light: #1e293b;
+            --gray: #94a3b8;
+            background: #0f172a;
+            color: #e2e8f0;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Kantumruy Pro', 'Inter', sans-serif;
+        }
+        body {
+            background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+            color: var(--secondary);
+            min-height: 100vh;
+            line-height: 1.6;
+            transition: var(--transition);
+        }
+        [data-theme="dark"] body {
+            background: #0f172a;
+        }
+        .app-container {
+            display: flex;
+            min-height: 100vh;
+        }
+        /* Sidebar Styles */
+        .sidebar {
+            width: 280px;
+            background: var(--dark);
+            color: white;
+            padding: 1.5rem 0;
+            display: flex;
+            flex-direction: column;
+            transition: var(--transition);
+            box-shadow: var(--shadow);
+            z-index: 100;
+            position: relative;
+            overflow: hidden;
+        }
+        .sidebar::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--gradient);
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 0 1.5rem 2rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .logo-icon {
+            width: 44px;
+            height: 44px;
+            background: var(--gradient);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            box-shadow: 0 4px 12px rgba(45, 91, 255, 0.3);
+        }
+        .logo-text {
+            font-size: 1.6rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, #60a5fa, #c084fc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .nav-links {
+            flex: 1;
+            padding: 2rem 0;
+        }
+        .nav-item {
+            padding: 1rem 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: var(--transition);
+            border-left: 4px solid transparent;
+            margin: 4px 0;
+            position: relative;
+            border-radius: 0 12px 12px 0;
+        }
+        .nav-item:hover, .nav-item.active {
+            background: rgba(255, 255, 255, 0.05);
+            color: white;
+            border-left-color: var(--primary);
+        }
+        .nav-item i {
+            width: 20px;
+            text-align: center;
+            font-size: 1.1rem;
+        }
+        .notification-badge {
+            position: absolute;
+            right: 1.5rem;
+            background: var(--danger);
+            color: white;
+            border-radius: 50%;
+            width: 22px;
+            height: 22px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            font-weight: bold;
+            box-shadow: 0 2px 8px rgba(255, 71, 87, 0.4);
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+        .user-profile {
+            padding: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: rgba(255, 255, 255, 0.03);
+        }
+        .user-avatar {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            background: var(--gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.1rem;
+            box-shadow: 0 4px 12px rgba(45, 91, 255, 0.3);
+        }
+        .user-info {
+            flex: 1;
+        }
+        .user-name {
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+        .user-role {
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.6);
+        }
+        .logout-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: rgba(255, 255, 255, 0.7);
+            cursor: pointer;
+            transition: var(--transition);
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .logout-btn:hover {
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+        }
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: auto;
+        }
+        .top-bar {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(12px);
+            padding: 1.25rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 50;
+        }
+        [data-theme="dark"] .top-bar {
+            background: rgba(15, 23, 42, 0.95);
+        }
+        .page-title {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--dark);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .page-title i {
+            color: var(--primary);
+        }
+        .top-bar-actions {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+        .currency-badge {
+            background: var(--gradient);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .time-display {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 12px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+        .greeting {
+            font-size: 1rem;
+            margin-right: 10px;
+        }
+        .content-area {
+            flex: 1;
+            padding: 2rem;
+            overflow-y: auto;
+        }
+        /* Page Styles */
+        .page {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+        .page.active {
+            display: block;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        /* Login Page */
+        .login-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            padding: 1rem;
+        }
+        .login-card {
+            background: white;
+            border-radius: var(--radius);
+            padding: 2.5rem;
+            box-shadow: var(--shadow-lg);
+            width: 100%;
+            max-width: 420px;
+            text-align: center;
+        }
+        [data-theme="dark"] .login-card {
+            background: #1e293b;
+        }
+        .login-header {
+            margin-bottom: 2rem;
+        }
+        .login-logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 1.5rem;
+        }
+        .login-card h2 {
+            margin: 1rem 0;
+            color: var(--dark);
+        }
+        .login-card p {
+            color: var(--gray);
+            margin-bottom: 1.5rem;
+        }
+        .form-group {
+            margin-bottom: 1.5rem;
+            text-align: left;
+        }
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--dark);
+        }
+        .form-control {
+            width: 100%;
+            padding: 14px;
+            border: 1px solid var(--gray-light);
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: var(--transition);
+            background: white;
+        }
+        [data-theme="dark"] .form-control {
+            background: #1e293b;
+            border-color: #334155;
+            color: white;
+        }
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.2);
+        }
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            background: var(--gradient);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+        .btn-block {
+            width: 100%;
+        }
+        .btn-success {
+            background: var(--gradient-accent);
+        }
+        .btn-danger {
+            background: linear-gradient(135deg, var(--danger), #FF2E43);
+        }
+        .btn-warning {
+            background: linear-gradient(135deg, var(--warning), #FF8A1E);
+        }
+        /* Dashboard Page */
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+        .welcome-card {
+            background: var(--gradient);
+            color: white;
+            border-radius: var(--radius);
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            margin-bottom: 2rem;
+            animation: slideInDown 0.6s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        @keyframes slideInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .welcome-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 200px;
+            height: 200px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+        }
+        .welcome-card h2 {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+        .welcome-card p {
+            opacity: 0.9;
+            max-width: 600px;
+        }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        .stat-card {
+            background: white;
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            animation: zoomIn 0.5s ease;
+            transition: var(--transition);
+            border-left: 4px solid var(--primary);
+        }
+        [data-theme="dark"] .stat-card {
+            background: #1e293b;
+        }
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+        @keyframes zoomIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        .stat-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            background: rgba(45, 91, 255, 0.1);
+            color: var(--primary);
+        }
+        .stat-info {
+            flex: 1;
+        }
+        .stat-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 0.25rem;
+        }
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--gray);
+        }
+        .quick-actions {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        .action-btn {
+            background: white;
+            border: none;
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            transition: var(--transition);
+            text-align: center;
+        }
+        [data-theme="dark"] .action-btn {
+            background: #1e293b;
+        }
+        .action-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+            background: var(--primary);
+            color: white;
+        }
+        .action-btn:hover .action-icon {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+        .action-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            background: rgba(45, 91, 255, 0.1);
+            color: var(--primary);
+        }
+        .recent-activity {
+            background: white;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 1.5rem;
+        }
+        [data-theme="dark"] .recent-activity {
+            background: #1e293b;
+        }
+        .recent-activity h3 {
+            margin-bottom: 1rem;
+            color: var(--dark);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .activity-list {
+            list-style: none;
+        }
+        .activity-item {
+            padding: 1rem 0;
+            border-bottom: 1px solid var(--gray-light);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .activity-item:last-child {
+            border-bottom: none;
+        }
+        .activity-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+        }
+        .activity-icon.borrow {
+            background: rgba(255, 71, 87, 0.1);
+            color: var(--danger);
+        }
+        .activity-icon.payback {
+            background: rgba(0, 200, 150, 0.1);
+            color: var(--accent);
+        }
+        .activity-icon.business-income {
+            background: rgba(0, 200, 150, 0.1);
+            color: var(--accent);
+        }
+        .activity-icon.business-expense {
+            background: rgba(255, 159, 67, 0.1);
+            color: var(--warning);
+        }
+        .activity-details {
+            flex: 1;
+        }
+        .activity-title {
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+        .activity-meta {
+            font-size: 0.85rem;
+            color: var(--gray);
+        }
+        /* Wallet Page */
+        .wallet-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+        .balance-card {
+            background: var(--gradient);
+            color: white;
+            border-radius: var(--radius);
+            padding: 2.5rem;
+            box-shadow: var(--shadow);
+            margin-bottom: 2rem;
+            animation: slideInLeft 0.6s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        @keyframes slideInLeft {
+            from { opacity: 0; transform: translateX(-20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        .balance-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 200px;
+            height: 200px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+        }
+        .balance-label {
+            font-size: 1rem;
+            opacity: 0.9;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .balance-amount {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .balance-change {
+            display: flex;
+            gap: 1.5rem;
+        }
+        .change-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.95rem;
+            background: rgba(255, 255, 255, 0.15);
+            padding: 8px 16px;
+            border-radius: 20px;
+        }
+        .actions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        .action-card {
+            background: white;
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            animation: slideInRight 0.6s ease;
+            transition: var(--transition);
+            border-top: 4px solid var(--primary);
+        }
+        [data-theme="dark"] .action-card {
+            background: #1e293b;
+        }
+        .action-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+        @keyframes slideInRight {
+            from { opacity: 0; transform: translateX(20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        .action-card h3 {
+            margin-bottom: 1rem;
+            color: var(--dark);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .action-buttons {
+            display: flex;
+            gap: 12px;
+            margin-top: 1.5rem;
+        }
+        .action-buttons .btn {
+            flex: 1;
+        }
+        /* Due Date Section */
+        .due-date-section {
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--gray-light);
+        }
+        .due-date-toggle {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 1rem;
+            cursor: pointer;
+            padding: 8px 0;
+        }
+        .due-date-toggle input {
+            display: none;
+        }
+        .toggle-slider {
+            width: 44px;
+            height: 24px;
+            background: var(--gray-light);
+            border-radius: 24px;
+            position: relative;
+            transition: var(--transition);
+        }
+        .toggle-slider::before {
+            content: '';
+            position: absolute;
+            width: 18px;
+            height: 18px;
+            background: white;
+            border-radius: 50%;
+            top: 3px;
+            left: 3px;
+            transition: var(--transition);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        .due-date-toggle input:checked + .toggle-slider {
+            background: var(--accent);
+        }
+        .due-date-toggle input:checked + .toggle-slider::before {
+            transform: translateX(20px);
+        }
+        .due-date-input {
+            display: none;
+            margin-top: 1rem;
+            animation: fadeIn 0.3s ease;
+        }
+        .due-date-toggle input:checked ~ .due-date-input {
+            display: block;
+        }
+        /* Payback To Section */
+        .payback-to-section {
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--gray-light);
+        }
+        .payback-to-toggle {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 1rem;
+            cursor: pointer;
+            padding: 8px 0;
+        }
+        .payback-to-toggle input {
+            display: none;
+        }
+        .payback-to-input {
+            display: none;
+            margin-top: 1rem;
+            animation: fadeIn 0.3s ease;
+        }
+        .payback-to-toggle input:checked ~ .payback-to-input {
+            display: block;
+        }
+        /* History Page */
+        .history-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        .history-filters {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+        .filter-select {
+            padding: 10px 16px;
+            border: 1px solid var(--gray-light);
+            border-radius: 10px;
+            background: white;
+            font-size: 0.95rem;
+            min-width: 160px;
+        }
+        [data-theme="dark"] .filter-select {
+            background: #1e293b;
+            border-color: #334155;
+            color: white;
+        }
+        .history-table-container {
+            background: white;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            animation: fadeIn 0.5s ease;
+        }
+        [data-theme="dark"] .history-table-container {
+            background: #1e293b;
+        }
+        .history-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .history-table th {
+            background: #f8fafc;
+            padding: 1.25rem 1rem;
+            text-align: left;
+            font-weight: 600;
+            color: var(--dark);
+            border-bottom: 1px solid var(--gray-light);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        [data-theme="dark"] .history-table th {
+            background: #1e293b;
+        }
+        .history-table td {
+            padding: 1.25rem 1rem;
+            border-bottom: 1px solid var(--gray-light);
+        }
+        .history-table tr:last-child td {
+            border-bottom: none;
+        }
+        .history-table tr:hover {
+            background: #f8fafc;
+        }
+        [data-theme="dark"] .history-table tr:hover {
+            background: #1e293b;
+        }
+        .transaction-type {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+        .transaction-type.borrow {
+            background: rgba(255, 71, 87, 0.1);
+            color: var(--danger);
+        }
+        .transaction-type.payback {
+            background: rgba(0, 200, 150, 0.1);
+            color: var(--accent);
+        }
+        .transaction-type.business-income {
+            background: rgba(0, 200, 150, 0.1);
+            color: var(--accent);
+        }
+        .transaction-type.business-expense {
+            background: rgba(255, 159, 67, 0.1);
+            color: var(--warning);
+        }
+        .transaction-type.adjustment {
+            background: rgba(255, 159, 67, 0.1);
+            color: var(--warning);
+        }
+        .due-date-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            background: rgba(255, 159, 67, 0.1);
+            color: var(--warning);
+        }
+        .due-date-badge.overdue {
+            background: rgba(255, 71, 87, 0.1);
+            color: var(--danger);
+            animation: pulse 2s infinite;
+        }
+        /* Alerts Page */
+        .alerts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+        .alert-card {
+            background: white;
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            animation: zoomIn 0.5s ease;
+            transition: var(--transition);
+            border-left: 4px solid var(--warning);
+        }
+        [data-theme="dark"] .alert-card {
+            background: #1e293b;
+        }
+        .alert-card.overdue {
+            border-left-color: var(--danger);
+        }
+        .alert-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+        .alert-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 1rem;
+        }
+        .alert-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            background: rgba(255, 159, 67, 0.1);
+            color: var(--warning);
+        }
+        .alert-card.overdue .alert-icon {
+            background: rgba(255, 71, 87, 0.1);
+            color: var(--danger);
+        }
+        .alert-title {
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 4px;
+        }
+        .alert-meta {
+            font-size: 0.85rem;
+            color: var(--gray);
+        }
+        .alert-amount {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--dark);
+            margin: 1rem 0;
+        }
+        .alert-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 1rem;
+        }
+        .alert-actions .btn {
+            flex: 1;
+        }
+        /* Family Overview Page */
+        .users-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+        .user-card {
+            background: white;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 1.5rem;
+            animation: zoomIn 0.5s ease;
+            transition: var(--transition);
+            border-top: 4px solid var(--primary);
+        }
+        [data-theme="dark"] .user-card {
+            background: #1e293b;
+        }
+        .user-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+        .user-card-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 1rem;
+        }
+        .user-avatar-small {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            background: var(--gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: white;
+            font-size: 1.1rem;
+        }
+        .user-card-info {
+            flex: 1;
+        }
+        .user-card-name {
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 4px;
+        }
+        .user-card-role {
+            font-size: 0.8rem;
+            color: var(--gray);
+            background: var(--gray-light);
+            padding: 2px 8px;
+            border-radius: 12px;
+            display: inline-block;
+        }
+        .user-balance {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--dark);
+            margin: 1rem 0;
+            text-align: center;
+            padding: 1rem;
+            background: var(--light);
+            border-radius: 10px;
+        }
+        [data-theme="dark"] .user-balance {
+            background: #1e293b;
+        }
+        .user-stats {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+        .user-stat {
+            flex: 1;
+        }
+        .user-stat-value {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--dark);
+        }
+        .user-stat-label {
+            font-size: 0.75rem;
+            color: var(--gray);
+            margin-top: 4px;
+        }
+        .adjust-balance {
+            display: flex;
+            gap: 10px;
+            margin-top: 1rem;
+        }
+        .adjust-balance input {
+            flex: 1;
+        }
+        /* Settings Page */
+        .settings-page {
+            padding: 1.5rem;
+        }
+        .settings-card {
+            background: white;
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            margin-bottom: 1.5rem;
+        }
+        [data-theme="dark"] .settings-card {
+            background: #1e293b;
+        }
+        .settings-card h3 {
+            margin-bottom: 1rem;
+            color: var(--dark);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .settings-group {
+            margin-bottom: 1.5rem;
+        }
+        .settings-row {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            align-items: center;
+        }
+        .settings-row .form-control {
+            flex: 1;
+        }
+        /* Toast Notification */
+        .toast {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 1rem 1.5rem;
+            background: white;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-lg);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            z-index: 1100;
+            transform: translateX(150%);
+            transition: transform 0.3s ease;
+            border-left: 4px solid var(--primary);
+        }
+        [data-theme="dark"] .toast {
+            background: #1e293b;
+        }
+        .toast.show {
+            transform: translateX(0);
+        }
+        .toast.success {
+            border-left-color: var(--accent);
+        }
+        .toast.error {
+            border-left-color: var(--danger);
+        }
+        .toast.warning {
+            border-left-color: var(--warning);
+        }
+        .toast-icon {
+            font-size: 1.2rem;
+        }
+        .toast.success .toast-icon {
+            color: var(--accent);
+        }
+        .toast.error .toast-icon {
+            color: var(--danger);
+        }
+        .toast.warning .toast-icon {
+            color: var(--warning);
+        }
+        /* Alert Banner */
+        .alert-banner {
+            background: linear-gradient(135deg, var(--warning), #FF8A1E);
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: var(--radius);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            animation: slideInDown 0.5s ease;
+            box-shadow: var(--shadow);
+        }
+        .alert-content {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal.show {
+            display: flex;
+            animation: fadeIn 0.3s ease;
+        }
+        .modal-content {
+            background: white;
+            border-radius: var(--radius);
+            padding: 2rem;
+            box-shadow: var(--shadow-lg);
+            width: 90%;
+            max-width: 500px;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        [data-theme="dark"] .modal-content {
+            background: #1e293b;
+        }
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        .modal-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--dark);
+        }
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--gray);
+        }
+        .close-modal:hover {
+            color: var(--dark);
+        }
+        /* Business Section */
+        .business-section {
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--gray-light);
+        }
+        .business-toggle {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 1rem;
+            cursor: pointer;
+            padding: 8px 0;
+        }
+        .business-toggle input {
+            display: none;
+        }
+        .business-input {
+            display: none;
+            margin-top: 1rem;
+            animation: fadeIn 0.3s ease;
+        }
+        .business-toggle input:checked ~ .business-input {
+            display: block;
+        }
+        /* Daily Usage Tracking */
+        .usage-card {
+            background: white;
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            margin-bottom: 1.5rem;
+            animation: slideInUp 0.6s ease;
+        }
+        [data-theme="dark"] .usage-card {
+            background: #1e293b;
+        }
+        .usage-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        .usage-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        .usage-stat {
+            text-align: center;
+            padding: 1rem;
+            background: var(--light);
+            border-radius: 10px;
+        }
+        [data-theme="dark"] .usage-stat {
+            background: #1e293b;
+        }
+        .usage-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 0.5rem;
+        }
+        .usage-label {
+            font-size: 0.85rem;
+            color: var(--gray);
+        }
+        .usage-chart {
+            height: 200px;
+            margin-top: 1rem;
+            background: var(--light);
+            border-radius: 10px;
+            display: flex;
+            align-items: flex-end;
+            padding: 1rem;
+            gap: 4px;
+        }
+        [data-theme="dark"] .usage-chart {
+            background: #1e293b;
+        }
+        .chart-bar {
+            flex: 1;
+            background: var(--gradient);
+            border-radius: 4px 4px 0 0;
+            position: relative;
+            transition: var(--transition);
+        }
+        .chart-bar:hover {
+            opacity: 0.8;
+        }
+        .chart-label {
+            position: absolute;
+            bottom: -25px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            font-size: 0.75rem;
+            color: var(--gray);
+        }
+        .chart-value {
+            position: absolute;
+            top: -25px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        /* Enhanced business details */
+        .business-details {
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--gray-light);
+        }
+        .business-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        .business-stat {
+            text-align: center;
+            padding: 1rem;
+            background: var(--light);
+            border-radius: 10px;
+        }
+        [data-theme="dark"] .business-stat {
+            background: #1e293b;
+        }
+        /* Enhanced payback details */
+        .payback-details {
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--gray-light);
+        }
+        .payback-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        .payback-stat {
+            text-align: center;
+            padding: 1rem;
+            background: var(--light);
+            border-radius: 10px;
+        }
+        [data-theme="dark"] .payback-stat {
+            background: #1e293b;
+        }
+        /* Enhanced history filters */
+        .date-range-filter {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+        .date-input {
+            padding: 10px;
+            border: 1px solid var(--gray-light);
+            border-radius: 10px;
+            background: white;
+            font-size: 0.95rem;
+        }
+        [data-theme="dark"] .date-input {
+            background: #1e293b;
+            border-color: #334155;
+            color: white;
+        }
+        /* Reports Page */
+        .reports-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        .report-card {
+            background: white;
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            animation: zoomIn 0.5s ease;
+            transition: var(--transition);
+            border-top: 4px solid var(--primary);
+        }
+        [data-theme="dark"] .report-card {
+            background: #1e293b;
+        }
+        .report-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+        .report-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 1rem;
+        }
+        .report-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            background: rgba(45, 91, 255, 0.1);
+            color: var(--primary);
+        }
+        .report-title {
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 4px;
+        }
+        .report-description {
+            font-size: 0.85rem;
+            color: var(--gray);
+        }
+        .report-content {
+            margin-top: 1rem;
+        }
+        .report-summary {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+        .report-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--dark);
+        }
+        .report-change {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+        .report-change.positive {
+            color: var(--accent);
+        }
+        .report-change.negative {
+            color: var(--danger);
+        }
+        /* Animation for new elements */
+        @keyframes slideInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        /* Mobile Menu Toggle */
+        .mobile-menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--dark);
+            cursor: pointer;
+        }
+        /* Profile Section */
+        .profile-section {
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--gray-light);
+        }
+        .profile-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: var(--gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: white;
+            margin: 0 auto 1.5rem;
+            box-shadow: var(--shadow);
+        }
+        /* Business Time Section */
+        .business-time-section {
+            margin-top: 1.5rem;
+            padding: 1.5rem;
+            background: var(--light);
+            border-radius: var(--radius);
+            border-left: 4px solid var(--accent);
+        }
+        [data-theme="dark"] .business-time-section {
+            background: #1e293b;
+        }
+        .time-slots {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        .time-slot {
+            background: white;
+            padding: 1rem;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+        [data-theme="dark"] .time-slot {
+            background: #1e293b;
+        }
+        .time-slot.active {
+            background: var(--gradient-accent);
+            color: white;
+            transform: translateY(-2px);
+        }
+        .time-slot:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+        /* Responsive adjustments */
+        @media (max-width: 1024px) {
+            .sidebar {
+                width: 80px;
+            }
+            .logo-text, .nav-item span, .user-info {
+                display: none;
+            }
+            .logo {
+                justify-content: center;
+                padding: 0 1rem 2rem;
+            }
+            .nav-item {
+                justify-content: center;
+                padding: 1rem;
+            }
+            .user-profile {
+                justify-content: center;
+            }
+        }
+        @media (max-width: 768px) {
+            .app-container {
+                flex-direction: column;
+            }
+            .sidebar {
+                width: 100%;
+                height: auto;
+                flex-direction: row;
+                padding: 1rem;
+                position: fixed;
+                bottom: 0;
+                z-index: 100;
+            }
+            .logo {
+                padding: 0;
+                border-bottom: none;
+                display: none;
+            }
+            .nav-links {
+                padding: 0;
+                flex-direction: row;
+                flex: 1;
+                justify-content: space-around;
+            }
+            .nav-item {
+                border-left: none;
+                border-bottom: 3px solid transparent;
+                flex-direction: column;
+                padding: 0.5rem;
+                font-size: 0.8rem;
+                border-radius: 10px;
+            }
+            .nav-item.active {
+                border-left: none;
+                border-bottom-color: var(--primary);
+            }
+            .user-profile {
+                border-top: none;
+                border-left: 1px solid rgba(255, 255, 255, 0.1);
+                display: none;
+            }
+            .main-content {
+                margin-bottom: 80px;
+            }
+            .actions-grid, .stats-grid, .users-grid, .alerts-grid, .quick-actions {
+                grid-template-columns: 1fr;
+            }
+            .history-filters {
+                flex-direction: column;
+            }
+            .balance-amount {
+                font-size: 2.5rem;
+            }
+            .settings-row {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .time-display {
+                display: none;
+            }
+            .greeting {
+                display: none;
+            }
+            .usage-stats, .business-stats, .payback-stats {
+                grid-template-columns: 1fr 1fr;
+            }
+            .date-range-filter {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .reports-grid {
+                grid-template-columns: 1fr;
+            }
+            .usage-chart {
+                height: 150px;
+            }
+            .mobile-menu-toggle {
+                display: block;
+            }
+            .top-bar-actions {
+                display: none;
+            }
+            .top-bar {
+                padding: 1rem;
+            }
+            .content-area {
+                padding: 1rem;
+            }
+            .time-slots {
+                grid-template-columns: 1fr;
+            }
+        }
+        @media (max-width: 480px) {
+            .balance-card {
+                padding: 1.5rem;
+            }
+            .balance-amount {
+                font-size: 2rem;
+            }
+            .change-item {
+                font-size: 0.8rem;
+                padding: 6px 12px;
+            }
+            .usage-stats, .business-stats, .payback-stats {
+                grid-template-columns: 1fr;
+            }
+            .action-card {
+                padding: 1rem;
+            }
+            .history-table {
+                font-size: 0.8rem;
+            }
+            .history-table th, .history-table td {
+                padding: 0.75rem 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Login Page -->
+    <div class="login-container" id="login-page">
+        <div class="login-card">
+            <div class="login-header">
+                <div class="login-logo">
+                    <div class="logo-icon">
+                        <i class="fas fa-wallet"></i>
+                    </div>
+                    <div class="logo-text">FamilyWallet Pro</div>
+                </div>
+                <h2>ចូលទៅក្នុងគណនី</h2>
+                <p>បញ្ចូលព័ត៌មានគណនីរបស់អ្នក</p>
+            </div>
+            <form id="login-form">
+                <div class="form-group">
+                    <label for="username" class="form-label">ឈ្មោះអ្នកប្រើ</label>
+                    <input type="text" id="username" class="form-control" placeholder="បញ្ចូលឈ្មោះអ្នកប្រើ" required>
+                </div>
+                <div class="form-group">
+                    <label for="password" class="form-label">ពាក្យសម្ងាត់</label>
+                    <input type="password" id="password" class="form-control" placeholder="បញ្ចូលពាក្យសម្ងាត់" required>
+                </div>
+                <button type="submit" class="btn btn-block">ចូល</button>
+            </form>
+            <div style="margin-top: 1.5rem; font-size: 0.9rem; color: var(--gray); text-align: left;">
+                <p><strong>ទិន្នន័យសាកល្បង:</strong></p>
+                <p>ម្ចាស់: owner / 1234</p>
+                <p>អ្នកគ្រប់គ្រង: admin / 1234</p>
+                <p>អ្នកប្រើ: user1 / 1234</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main App -->
+    <div class="app-container" id="app-container" style="display: none;">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-wallet"></i>
+                </div>
+                <div class="logo-text">FamilyWallet Pro</div>
+            </div>
+            <div class="nav-links">
+                <a href="#" class="nav-item active" data-page="dashboard">
+                    <i class="fas fa-home"></i>
+                    <span>ផ្ទាំងគ្រប់គ្រង</span>
+                </a>
+                <a href="#" class="nav-item" data-page="wallet">
+                    <i class="fas fa-wallet"></i>
+                    <span>កាបូប</span>
+                </a>
+                <a href="#" class="nav-item" data-page="history">
+                    <i class="fas fa-history"></i>
+                    <span>ប្រវត្តិ</span>
+                </a>
+                <a href="#" class="nav-item admin-only" data-page="overview">
+                    <i class="fas fa-chart-pie"></i>
+                    <span>សាច់ញ្ញាប</span>
+                </a>
+                <a href="#" class="nav-item" data-page="alerts" id="alerts-nav">
+                    <i class="fas fa-bell"></i>
+                    <span>ការជូនដំណឹង</span>
+                    <span class="notification-badge" id="alert-count">0</span>
+                </a>
+                <a href="#" class="nav-item" data-page="settings">
+                    <i class="fas fa-cog"></i>
+                    <span>ការកំណត់</span>
+                </a>
+            </div>
+            <div class="user-profile">
+                <div class="user-avatar" id="user-avatar">U</div>
+                <div class="user-info">
+                    <div class="user-name" id="user-name">អ្នកប្រើ</div>
+                    <div class="user-role" id="user-role">តួនាទី</div>
+                </div>
+                <button class="logout-btn" id="logout-btn">
+                    <i class="fas fa-sign-out-alt"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <div class="top-bar">
+                <button class="mobile-menu-toggle" id="mobile-menu-toggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <h1 class="page-title" id="page-title">
+                    <i class="fas fa-home"></i>
+                    <span>ផ្ទាំងគ្រប់គ្រង</span>
+                </h1>
+                <div class="top-bar-actions">
+                    <div class="time-display">
+                        <i class="fas fa-clock"></i>
+                        <span id="current-time">00:00:00</span>
+                    </div>
+                    <div class="greeting" id="greeting">សួស្តី!</div>
+                    <div class="currency-badge">
+                        <i class="fas fa-riel-sign"></i>
+                        <span>KHR (៛)</span>
+                    </div>
+                    <button class="btn" id="theme-toggle">
+                        <i class="fas fa-moon"></i> Dark Mode
+                    </button>
+                </div>
+            </div>
+
+            <div class="content-area">
+                <!-- Alerts Banner -->
+                <div class="alert-banner" id="alert-banner" style="display: none;">
+                    <div class="alert-content">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <div>
+                            <strong>មានការបង់ប្រាក់ដែលត្រូវបង់ឆាប់!</strong>
+                            <span id="alert-message">អ្នកមានការបង់ប្រាក់ដែលត្រូវបង់ក្នុងរយៈពេល ៧ ថ្ងៃខាងមុខ។</span>
+                        </div>
+                    </div>
+                    <button class="btn" style="background: rgba(255,255,255,0.2); color: white;" id="dismiss-alert-btn">បិទ</button>
+                </div>
+
+                <!-- Dashboard Page -->
+                <div class="page active" id="dashboard-page">
+                    <div class="welcome-card">
+                        <h2>សូមស្វាគមន៍ការត្រឡប់មកវិញ, <span id="welcome-user">អ្នកប្រើ</span>!</h2>
+                        <p>ទិដ្ឋភាពទូទៅនៃស្ថានភាពហិរញ្ញវត្ថុគ្រួសាររបស់អ្នក។ តាមដានការខ្ចី និងការសងប្រាក់របស់អ្នក។</p>
+                    </div>
+
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-wallet"></i>
+                            </div>
+                            <div class="stat-info">
+                                <div class="stat-value" id="user-balance-dash">៛0</div>
+                                <div class="stat-label">សមតុល្យបច្ចុប្បន្ន</div>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-hand-holding-usd"></i>
+                            </div>
+                            <div class="stat-info">
+                                <div class="stat-value" id="total-borrowed-dash">៛0</div>
+                                <div class="stat-label">សរុបដែលបានខ្ចី</div>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-money-bill-wave"></i>
+                            </div>
+                            <div class="stat-info">
+                                <div class="stat-value" id="total-paid-dash">៛0</div>
+                                <div class="stat-label">សរុបដែលបានសង</div>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <div class="stat-info">
+                                <div class="stat-value" id="due-transactions-dash">0</div>
+                                <div class="stat-label">ការជូនដំណឹង</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="quick-actions">
+                        <button class="action-btn" id="quick-borrow">
+                            <div class="action-icon">
+                                <i class="fas fa-hand-holding-usd"></i>
+                            </div>
+                            <div>ខ្ចីប្រាក់</div>
+                        </button>
+                        <button class="action-btn" id="quick-payback">
+                            <div class="action-icon">
+                                <i class="fas fa-money-bill-wave"></i>
+                            </div>
+                            <div>សងប្រាក់</div>
+                        </button>
+                        <button class="action-btn" id="quick-history">
+                            <div class="action-icon">
+                                <i class="fas fa-history"></i>
+                            </div>
+                            <div>មើលប្រវត្តិ</div>
+                        </button>
+                        <button class="action-btn admin-only" id="quick-business">
+                            <div class="action-icon">
+                                <i class="fas fa-business-time"></i>
+                            </div>
+                            <div>អាជីវកម្ម</div>
+                        </button>
+                    </div>
+
+                    <div class="recent-activity">
+                        <h3>
+                            <i class="fas fa-list"></i>
+                            <span>សកម្មភាពថ្មីៗ</span>
+                        </h3>
+                        <ul class="activity-list" id="recent-activities">
+                            <!-- Recent activities will be populated here -->
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Wallet Page -->
+                <div class="page" id="wallet-page">
+                    <div class="wallet-header">
+                        <h2>កាបូបអេឡិចត្រូនិករបស់ខ្ញុំ</h2>
+                    </div>
+
+                    <div class="balance-card">
+                        <div class="balance-label">
+                            <i class="fas fa-wallet"></i>
+                            <span>សមតុល្យបច្ចុប្បន្ន</span>
+                        </div>
+                        <div class="balance-amount" id="user-balance">៛0</div>
+                        <div class="balance-change">
+                            <div class="change-item">
+                                <i class="fas fa-arrow-up"></i>
+                                <span>បានខ្ចី: <span id="total-borrowed">៛0</span></span>
+                            </div>
+                            <div class="change-item">
+                                <i class="fas fa-arrow-down"></i>
+                                <span>បានសង: <span id="total-paid">៛0</span></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="actions-grid">
+                        <div class="action-card">
+                            <h3>
+                                <div class="action-icon">
+                                    <i class="fas fa-hand-holding-usd"></i>
+                                </div>
+                                ខ្ចីប្រាក់
+                            </h3>
+                            <p>ស្នើសុំខ្ចីប្រាក់ពីមូលនិធិគ្រួសារ</p>
+                            <div class="form-group">
+                                <label for="borrow-name" class="form-label">ឈ្មោះអ្នកខ្ចី</label>
+                                <input type="text" id="borrow-name" class="form-control" placeholder="បញ្ចូលឈ្មោះអ្នកខ្ចី" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="borrow-amount" class="form-label">ចំនួនទឹកប្រាក់</label>
+                                <input type="number" id="borrow-amount" class="form-control" min="0" step="1000" placeholder="បញ្ចូលចំនួនទឹកប្រាក់" required>
+                            </div>
+                            <div class="due-date-section">
+                                <label class="due-date-toggle">
+                                    <input type="checkbox" id="borrow-due-date-toggle">
+                                    <span class="toggle-slider"></span>
+                                    <span>កំណត់កាលបរិច្ឆេទសង</span>
+                                </label>
+                                <div class="due-date-input">
+                                    <label for="borrow-due-date" class="form-label">កាលបរិច្ឆេទសង</label>
+                                    <input type="date" id="borrow-due-date" class="form-control">
+                                </div>
+                            </div>
+                            <div class="action-buttons">
+                                <button class="btn btn-success" id="borrow-btn">ខ្ចី</button>
+                            </div>
+                        </div>
+
+                        <div class="action-card">
+                            <h3>
+                                <div class="action-icon">
+                                    <i class="fas fa-money-bill-wave"></i>
+                                </div>
+                                សងប្រាក់
+                            </h3>
+                            <p>សងប្រាក់ដែលអ្នកបានខ្ចីទៅមូលនិធិគ្រួសារ</p>
+                            <div class="form-group">
+                                <label for="payback-amount" class="form-label">ចំនួនទឹកប្រាក់</label>
+                                <input type="number" id="payback-amount" class="form-control" min="0" step="1000" placeholder="បញ្ចូលចំនួនទឹកប្រាក់" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="payback-name" class="form-label">ឈ្មោះអ្នកសង</label>
+                                <input type="text" id="payback-name" class="form-control" placeholder="បញ្ចូលឈ្មោះអ្នកសង" required>
+                            </div>
+                            <div class="action-buttons">
+                                <button class="btn btn-danger" id="payback-btn">សង</button>
+                            </div>
+                        </div>
+
+                        <div class="action-card admin-only">
+                            <h3>
+                                <div class="action-icon">
+                                    <i class="fas fa-business-time"></i>
+                                </div>
+                                អាជីវកម្ម
+                            </h3>
+                            <p>ការចំណាយ និងចំណូលពីអាជីវកម្ម</p>
+                            
+                            <div class="business-time-section">
+                                <h4><i class="fas fa-clock"></i> ពេលវេលាអាជីវកម្ម</h4>
+                                <p>អាជីវកម្មនឹងផ្ទុកទិន្នន័យរហូតដល់ម៉ោង 12:00</p>
+                                <div class="time-slots">
+                                    <div class="time-slot" data-time="morning">
+                                        <div class="usage-value">06:00 - 12:00</div>
+                                        <div class="usage-label">ពេលព្រឹក</div>
+                                    </div>
+                                    <div class="time-slot" data-time="afternoon">
+                                        <div class="usage-value">12:00 - 18:00</div>
+                                        <div class="usage-label">ពេលថ្ងៃត្រង់</div>
+                                    </div>
+                                    <div class="time-slot" data-time="evening">
+                                        <div class="usage-value">18:00 - 24:00</div>
+                                        <div class="usage-label">ពេលល្ងាច</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="business-section">
+                                <label class="business-toggle">
+                                    <input type="checkbox" id="business-type-toggle">
+                                    <span class="toggle-slider"></span>
+                                    <span>ប្រភេទ: <span id="business-type-label">ចំណូល</span></span>
+                                </label>
+                                <div class="business-input">
+                                    <div class="form-group">
+                                        <label for="business-amount" class="form-label">ចំនួនទឹកប្រាក់</label>
+                                        <input type="number" id="business-amount" class="form-control" min="0" step="1000" placeholder="បញ្ចូលចំនួនទឹកប្រាក់" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="business-description" class="form-label">ការពិពណ៌នា</label>
+                                        <input type="text" id="business-description" class="form-control" placeholder="បញ្ចូលការពិពណ៌នា" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="business-time" class="form-label">ពេលវេលា</label>
+                                        <select id="business-time" class="form-control">
+                                            <option value="morning">06:00 - 12:00 (ពេលព្រឹក)</option>
+                                            <option value="afternoon">12:00 - 18:00 (ពេលថ្ងៃត្រង់)</option>
+                                            <option value="evening">18:00 - 24:00 (ពេលល្ងាច)</option>
+                                        </select>
+                                    </div>
+                                    <div class="action-buttons">
+                                        <button class="btn btn-warning" id="business-btn">បញ្ចូល</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- History Page -->
+                <div class="page" id="history-page">
+                    <div class="history-header">
+                        <h2>ប្រវត្តិប្រតិបត្តិការ</h2>
+                        <div class="history-filters">
+                            <select class="filter-select" id="history-filter">
+                                <option value="all">ប្រតិបត្តិការទាំងអស់</option>
+                                <option value="borrow">ត្រឹមតែខ្ចី</option>
+                                <option value="payback">ត្រឹមតែសង</option>
+                                <option value="business">ត្រឹមតែអាជីវកម្ម</option>
+                            </select>
+                            <button class="btn" id="export-history-btn">
+                                <i class="fas fa-download"></i> នាំចេញ
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="history-table-container">
+                        <table class="history-table">
+                            <thead>
+                                <tr>
+                                    <th>កាលបរិច្ឆេទ</th>
+                                    <th>អ្នកប្រើ</th>
+                                    <th>ប្រភេទ</th>
+                                    <th>ចំនួនទឹកប្រាក់</th>
+                                    <th>សមតុល្យ</th>
+                                </tr>
+                            </thead>
+                            <tbody id="history-body">
+                                <!-- History rows will be populated here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Family Overview Page -->
+                <div class="page" id="overview-page">
+                    <div class="dashboard-header">
+                        <h2>ទិដ្ឋភាពសាច់ញ្ញាប</h2>
+                    </div>
+
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <div class="stat-info">
+                                <div class="stat-value" id="total-users">0</div>
+                                <div class="stat-label">សមាជិកគ្រួសារ</div>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-hand-holding-usd"></i>
+                            </div>
+                            <div class="stat-info">
+                                <div class="stat-value" id="total-borrowed-amount">៛0</div>
+                                <div class="stat-label">សរុបដែលបានខ្ចី</div>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-exchange-alt"></i>
+                            </div>
+                            <div class="stat-info">
+                                <div class="stat-value" id="total-transactions">0</div>
+                                <div class="stat-label">សរុបប្រតិបត្តិការ</div>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <div class="stat-info">
+                                <div class="stat-value" id="due-transactions">0</div>
+                                <div class="stat-label">ការជូនដំណឹង</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h3 style="margin-bottom: 1rem;">សមាជិកគ្រួសារ</h3>
+                    <div class="users-grid" id="users-grid">
+                        <!-- User cards will be populated here -->
+                    </div>
+                </div>
+
+                <!-- Alerts Page -->
+                <div class="page" id="alerts-page">
+                    <div class="history-header">
+                        <h2>ការជូនដំណឹងការបង់ប្រាក់</h2>
+                    </div>
+
+                    <div class="alerts-grid" id="alerts-grid">
+                        <!-- Alert cards will be populated here -->
+                    </div>
+                </div>
+
+                <!-- Settings Page -->
+                <div class="page" id="settings-page">
+                    <div class="dashboard-header">
+                        <h2>ការកំណត់</h2>
+                    </div>
+
+                    <div class="settings-card">
+                        <h3><i class="fas fa-user-cog"></i> ការកំណត់គណនី</h3>
+                        <div class="profile-section">
+                            <div class="profile-avatar" id="profile-avatar">
+                                U
+                            </div>
+                            <div class="settings-group">
+                                <div class="settings-row">
+                                    <div class="form-group" style="flex: 1;">
+                                        <label for="change-username" class="form-label">ឈ្មោះអ្នកប្រើថ្មី</label>
+                                        <input type="text" id="change-username" class="form-control" placeholder="បញ្ចូលឈ្មោះអ្នកប្រើថ្មី">
+                                    </div>
+                                    <button class="btn" id="change-username-btn" style="margin-top: 1.5rem;">
+                                        <i class="fas fa-sync"></i> ផ្លាស់ប្តូរឈ្មោះ
+                                    </button>
+                                </div>
+                              
+                                <div class="settings-row">
+                                    <div class="form-group" style="flex: 1;">
+                                        <label for="change-password" class="form-label">ពាក្យសម្ងាត់ថ្មី</label>
+                                        <input type="password" id="change-password" class="form-control" placeholder="បញ្ចូលពាក្យសម្ងាត់ថ្មី">
+                                    </div>
+                                    <button class="btn" id="change-password-btn" style="margin-top: 1.5rem;">
+                                        <i class="fas fa-key"></i> ផ្លាស់ប្តូរពាក្យសម្ងាត់
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="settings-card admin-only">
+                        <h3><i class="fas fa-users-cog"></i> ការគ្រប់គ្រងអ្នកប្រើ</h3>
+                        <div class="settings-group">
+                            <div class="settings-row">
+                                <div class="form-group" style="flex: 1;">
+                                    <label for="new-username" class="form-label">ឈ្មោះអ្នកប្រើថ្មី</label>
+                                    <input type="text" id="new-username" class="form-control" placeholder="បញ្ចូលឈ្មោះអ្នកប្រើថ្មី">
+                                </div>
+                                <div class="form-group" style="flex: 1;">
+                                    <label for="new-password" class="form-label">ពាក្យសម្ងាត់</label>
+                                    <input type="password" id="new-password" class="form-control" placeholder="បញ្ចូលពាក្យសម្ងាត់">
+                                </div>
+                                <div class="form-group" style="flex: 1;">
+                                    <label for="new-role" class="form-label">តួនាទី</label>
+                                    <select id="new-role" class="form-control">
+                                        <option value="user">អ្នកប្រើ</option>
+                                        <option value="admin">អ្នកគ្រប់គ្រង</option>
+                                    </select>
+                                </div>
+                                <button class="btn btn-success" id="add-user-btn" style="margin-top: 1.5rem;">
+                                    <i class="fas fa-user-plus"></i> បន្ថែមអ្នកប្រើ
+                                </button>
+                            </div>
+                          
+                            <div id="users-list">
+                                <!-- Users list will be populated here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast">
+        <div class="toast-icon">!</div>
+        <div class="toast-message" id="toast-message">នេះគឺជាសារជូនដំណឹង</div>
+    </div>
+
+    <!-- User Management Modal -->
+    <div class="modal" id="user-management-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">ការគ្រប់គ្រងអ្នកប្រើ</h3>
+                <button class="close-modal" id="close-user-modal">&times;</button>
+            </div>
+            <div class="form-group">
+                <label for="edit-username" class="form-label">ឈ្មោះអ្នកប្រើ</label>
+                <input type="text" id="edit-username" class="form-control" placeholder="ឈ្មោះអ្នកប្រើ">
+            </div>
+            <div class="form-group">
+                <label for="edit-password" class="form-label">ពាក្យសម្ងាត់ថ្មី</label>
+                <input type="password" id="edit-password" class="form-control" placeholder="ពាក្យសម្ងាត់ថ្មី">
+            </div>
+            <div class="form-group">
+                <label for="edit-role" class="form-label">តួនាទី</label>
+                <select id="edit-role" class="form-control">
+                    <option value="user">អ្នកប្រើ</option>
+                    <option value="admin">អ្នកគ្រប់គ្រង</option>
+                </select>
+            </div>
+            <div class="action-buttons" style="margin-top: 1.5rem;">
+                <button class="btn btn-success" id="save-user-btn">រក្សាទុក</button>
+                <button class="btn btn-danger" id="delete-user-btn">លុបអ្នកប្រើ</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Data initialization
+        const STORAGE_KEY = 'familywallet_users';
+        
+        // Initialize default users if not exists
+        function initializeUsers() {
+            let users = JSON.parse(localStorage.getItem(STORAGE_KEY));
+            if (!users || users.length === 0) {
+                users = [
+                    {
+                        username: "owner",
+                        password: "1234",
+                        role: "owner",
+                        balance: 100000,
+                        history: [
+                            {
+                                date: new Date().toISOString(),
+                                type: "Initial Balance",
+                                amount: 100000,
+                                balance: 100000,
+                                description: "Initial account balance"
+                            }
+                        ]
+                    },
+                    {
+                        username: "admin",
+                        password: "1234",
+                        role: "admin",
+                        balance: 50000,
+                        history: []
+                    },
+                    {
+                        username: "user1",
+                        password: "1234",
+                        role: "user",
+                        balance: 0,
+                        history: []
+                    }
+                ];
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(users));
+            }
+            return users;
+        }
+
+        // Get users from localStorage
+        function getUsers() {
+            return JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+        }
+
+        // Save users to localStorage
+        function saveUsers(users) {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(users));
+        }
+
+        // Get current user from session
+        function getCurrentUser() {
+            return JSON.parse(localStorage.getItem('currentUser')) || null;
+        }
+
+        // Set current user in session
+        function setCurrentUser(user) {
+            localStorage.setItem('currentUser', JSON.stringify(user));
+        }
+
+        // Clear current user session
+        function clearCurrentUser() {
+            localStorage.removeItem('currentUser');
+        }
+
+        // Format currency in Khmer Riel
+        function formatCurrency(amount) {
+            return '៛' + amount.toLocaleString('km-KH');
+        }
+
+        // Format date in Khmer
+        function formatDate(date) {
+            return new Date(date).toLocaleDateString('km-KH');
+        }
+
+        // Show toast notification
+        function showToast(message, type = 'success') {
+            const toast = document.getElementById('toast');
+            toast.className = `toast ${type}`;
+            document.getElementById('toast-message').textContent = message;
+            toast.classList.add('show');
+
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        // Update time display
+        function updateTime() {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString('km-KH');
+            document.getElementById('current-time').textContent = timeString;
+
+            // Update greeting based on time of day
+            const hour = now.getHours();
+            let greeting = 'សួស្តី!';
+            if (hour < 12) {
+                greeting = 'សួស្តីព្រឹក!';
+            } else if (hour < 18) {
+                greeting = 'សួស្តីថ្ងៃត្រង់!';
+            } else {
+                greeting = 'សួស្តីល្ងាច!';
+            }
+            document.getElementById('greeting').textContent = greeting;
+        }
+
+        // Navigate to page
+        function navigateTo(pageId) {
+            // Hide all pages
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+
+            // Show target page
+            document.getElementById(pageId).classList.add('active');
+
+            // Update active nav link
+            document.querySelectorAll('.nav-item').forEach(link => {
+                link.classList.remove('active');
+            });
+            
+            const targetNav = document.querySelector(`.nav-item[data-page="${pageId.replace('-page', '')}"]`);
+            if (targetNav) {
+                targetNav.classList.add('active');
+            }
+
+            // Update page title
+            const pageTitles = {
+                'dashboard-page': 'ផ្ទាំងគ្រប់គ្រង',
+                'wallet-page': 'កាបូបអេឡិចត្រូនិក',
+                'history-page': 'ប្រវត្តិប្រតិបត្តិការ',
+                'overview-page': 'ទិដ្ឋភាពសាច់ញ្ញាប',
+                'alerts-page': 'ការជូនដំណឹង',
+                'settings-page': 'ការកំណត់'
+            };
+
+            const pageIcons = {
+                'dashboard-page': 'fa-home',
+                'wallet-page': 'fa-wallet',
+                'history-page': 'fa-history',
+                'overview-page': 'fa-chart-pie',
+                'alerts-page': 'fa-bell',
+                'settings-page': 'fa-cog'
+            };
+
+            const titleElement = document.getElementById('page-title');
+            if (pageTitles[pageId]) {
+                titleElement.innerHTML = `<i class="fas ${pageIcons[pageId]}"></i><span>${pageTitles[pageId]}</span>`;
+            }
+
+            // Update UI based on page
+            if (pageId === 'dashboard-page') {
+                updateDashboardPage();
+            } else if (pageId === 'wallet-page') {
+                updateWalletPage();
+            } else if (pageId === 'history-page') {
+                updateHistoryPage();
+            } else if (pageId === 'overview-page') {
+                updateOverviewPage();
+            } else if (pageId === 'alerts-page') {
+                updateAlertsPage();
+            } else if (pageId === 'settings-page') {
+                updateSettingsPage();
+            }
+        }
+
+        // Update dashboard page
+        function updateDashboardPage() {
+            const currentUser = getCurrentUser();
+            if (!currentUser) return;
+
+            const users = getUsers();
+            const user = users.find(u => u.username === currentUser.username);
+
+            if (user) {
+                document.getElementById('welcome-user').textContent = user.username;
+                document.getElementById('user-balance-dash').textContent = formatCurrency(user.balance);
+
+                // Calculate totals
+                let totalBorrowed = 0;
+                let totalPaid = 0;
+
+                user.history.forEach(transaction => {
+                    if (transaction.type === 'Borrow') {
+                        totalBorrowed += transaction.amount;
+                    } else if (transaction.type === 'Pay Back') {
+                        totalPaid += Math.abs(transaction.amount);
+                    }
+                });
+
+                document.getElementById('total-borrowed-dash').textContent = formatCurrency(totalBorrowed);
+                document.getElementById('total-paid-dash').textContent = formatCurrency(totalPaid);
+
+                // Update recent activities
+                updateRecentActivities(user);
+            }
+        }
+
+        // Update recent activities
+        function updateRecentActivities(user) {
+            const activitiesList = document.getElementById('recent-activities');
+            activitiesList.innerHTML = '';
+
+            // Get last 5 transactions
+            const recentTransactions = user.history
+                .sort((a, b) => new Date(b.date) - new Date(a.date))
+                .slice(0, 5);
+
+            if (recentTransactions.length === 0) {
+                activitiesList.innerHTML = `
+                    <div class="activity-item">
+                        <div class="activity-details">
+                            <div class="activity-title">មិនមានសកម្មភាពថ្មីៗ</div>
+                            <div class="activity-meta">ចាប់ផ្ដើមធ្វើប្រតិបត្តិការដំបូងរបស់អ្នក</div>
+                        </div>
+                    </div>
+                `;
+                return;
+            }
+
+            recentTransactions.forEach(transaction => {
+                const activityItem = document.createElement('li');
+                activityItem.className = 'activity-item';
+
+                let iconClass = '';
+                let icon = '';
+
+                if (transaction.type === 'Borrow') {
+                    iconClass = 'borrow';
+                    icon = 'fa-hand-holding-usd';
+                } else if (transaction.type === 'Pay Back') {
+                    iconClass = 'payback';
+                    icon = 'fa-money-bill-wave';
+                } else if (transaction.type === 'Business Income') {
+                    iconClass = 'business-income';
+                    icon = 'fa-chart-line';
+                } else if (transaction.type === 'Business Expense') {
+                    iconClass = 'business-expense';
+                    icon = 'fa-chart-line';
+                } else {
+                    iconClass = 'payback';
+                    icon = 'fa-wallet';
+                }
+
+                activityItem.innerHTML = `
+                    <div class="activity-icon ${iconClass}">
+                        <i class="fas ${icon}"></i>
+                    </div>
+                    <div class="activity-details">
+                        <div class="activity-title">${transaction.type === 'Borrow' ? 'ខ្ចីប្រាក់' : transaction.type === 'Pay Back' ? 'សងប្រាក់' : transaction.type}: ${formatCurrency(Math.abs(transaction.amount))}</div>
+                        <div class="activity-meta">${formatDate(transaction.date)}${transaction.borrowerName ? ' - ' + transaction.borrowerName : ''}${transaction.description ? ' - ' + transaction.description : ''}</div>
+                    </div>
+                `;
+
+                activitiesList.appendChild(activityItem);
+            });
+        }
+
+        // Update wallet page
+        function updateWalletPage() {
+            const currentUser = getCurrentUser();
+            if (!currentUser) return;
+
+            const users = getUsers();
+            const user = users.find(u => u.username === currentUser.username);
+
+            if (user) {
+                document.getElementById('user-balance').textContent = formatCurrency(user.balance);
+
+                // Calculate totals
+                let totalBorrowed = 0;
+                let totalPaid = 0;
+
+                user.history.forEach(transaction => {
+                    if (transaction.type === 'Borrow') {
+                        totalBorrowed += transaction.amount;
+                    } else if (transaction.type === 'Pay Back') {
+                        totalPaid += Math.abs(transaction.amount);
+                    }
+                });
+
+                document.getElementById('total-borrowed').textContent = formatCurrency(totalBorrowed);
+                document.getElementById('total-paid').textContent = formatCurrency(totalPaid);
+
+                // Update business time slots
+                updateBusinessTimeSlots();
+            }
+        }
+
+        // Update business time slots
+        function updateBusinessTimeSlots() {
+            const currentHour = new Date().getHours();
+            const timeSlots = document.querySelectorAll('.time-slot');
+            
+            timeSlots.forEach(slot => {
+                slot.classList.remove('active');
+                const timeRange = slot.getAttribute('data-time');
+                
+                if (timeRange === 'morning' && currentHour >= 6 && currentHour < 12) {
+                    slot.classList.add('active');
+                } else if (timeRange === 'afternoon' && currentHour >= 12 && currentHour < 18) {
+                    slot.classList.add('active');
+                } else if (timeRange === 'evening' && currentHour >= 18) {
+                    slot.classList.add('active');
+                }
+            });
+        }
+
+        // Update history page
+        function updateHistoryPage() {
+            const currentUser = getCurrentUser();
+            const users = getUsers();
+            const historyBody = document.getElementById('history-body');
+            historyBody.innerHTML = '';
+
+            let allHistory = [];
+
+            if (currentUser.role === 'owner' || currentUser.role === 'admin') {
+                // Show all users' history for admin/owner
+                users.forEach(user => {
+                    user.history.forEach(transaction => {
+                        allHistory.push({
+                            ...transaction,
+                            user: user.username
+                        });
+                    });
+                });
+            } else {
+                // Show only current user's history
+                const user = users.find(u => u.username === currentUser.username);
+                if (user) {
+                    allHistory = user.history.map(transaction => ({
+                        ...transaction,
+                        user: user.username
+                    }));
+                }
+            }
+
+            // Apply filters
+            const typeFilter = document.getElementById('history-filter').value;
+
+            if (typeFilter !== 'all') {
+                allHistory = allHistory.filter(transaction =>
+                    transaction.type.toLowerCase().includes(typeFilter)
+                );
+            }
+
+            // Sort by date (newest first)
+            allHistory.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+            // Populate table
+            if (allHistory.length === 0) {
+                historyBody.innerHTML = `
+                    <tr>
+                        <td colspan="5" style="text-align: center; padding: 2rem;">
+                            <i class="fas fa-inbox" style="font-size: 2rem; color: #cbd5e1; margin-bottom: 1rem;"></i>
+                            <p>មិនមានប្រតិបត្តិការត្រូវបានរកឃើញ</p>
+                        </td>
+                    </tr>
+                `;
+            } else {
+                allHistory.forEach(transaction => {
+                    const row = document.createElement('tr');
+                    const typeClass = transaction.type.toLowerCase().replace(' ', '');
+                    let typeText = '';
+
+                    if (transaction.type === 'Borrow') {
+                        typeText = 'ខ្ចី';
+                    } else if (transaction.type === 'Pay Back') {
+                        typeText = 'សង';
+                    } else if (transaction.type === 'Business Income') {
+                        typeText = 'ចំណូលអាជីវកម្ម';
+                    } else if (transaction.type === 'Business Expense') {
+                        typeText = 'ចំណាយអាជីវកម្ម';
+                    } else {
+                        typeText = transaction.type;
+                    }
+
+                    row.innerHTML = `
+                        <td>${formatDate(transaction.date)}</td>
+                        <td>${transaction.borrowerName || transaction.user}</td>
+                        <td><span class="transaction-type ${typeClass}">${typeText}</span></td>
+                        <td>${formatCurrency(transaction.amount)}</td>
+                        <td>${formatCurrency(transaction.balance)}</td>
+                    `;
+                    historyBody.appendChild(row);
+                });
+            }
+        }
+
+        // Update overview page
+        function updateOverviewPage() {
+            const users = getUsers();
+            const usersGrid = document.getElementById('users-grid');
+            usersGrid.innerHTML = '';
+
+            // Update stats
+            document.getElementById('total-users').textContent = users.filter(u => u.role !== 'owner').length;
+
+            let totalBorrowed = 0;
+            let totalTransactions = 0;
+
+            users.forEach(user => {
+                user.history.forEach(transaction => {
+                    if (transaction.type === 'Borrow') {
+                        totalBorrowed += transaction.amount;
+                    }
+                });
+                totalTransactions += user.history.length;
+            });
+
+            document.getElementById('total-borrowed-amount').textContent = formatCurrency(totalBorrowed);
+            document.getElementById('total-transactions').textContent = totalTransactions;
+
+            // Create user cards
+            users.forEach(user => {
+                if (user.role !== 'owner') {
+                    // Calculate user stats
+                    let userBorrowed = 0;
+                    let userPaid = 0;
+
+                    user.history.forEach(transaction => {
+                        if (transaction.type === 'Borrow') {
+                            userBorrowed += transaction.amount;
+                        } else if (transaction.type === 'Pay Back') {
+                            userPaid += Math.abs(transaction.amount);
+                        }
+                    });
+
+                    const userCard = document.createElement('div');
+                    userCard.className = 'user-card';
+                    userCard.innerHTML = `
+                        <div class="user-card-header">
+                            <div class="user-avatar-small">${user.username.charAt(0).toUpperCase()}</div>
+                            <div class="user-card-info">
+                                <div class="user-card-name">${user.username}</div>
+                                <div class="user-card-role">${user.role === 'admin' ? 'អ្នកគ្រប់គ្រង' : 'អ្នកប្រើ'}</div>
+                            </div>
+                        </div>
+                        <div class="user-balance">${formatCurrency(user.balance)}</div>
+                        <div class="user-stats">
+                            <div class="user-stat">
+                                <div class="user-stat-value">${user.history.length}</div>
+                                <div class="user-stat-label">ប្រតិបត្តិការ</div>
+                            </div>
+                            <div class="user-stat">
+                                <div class="user-stat-value">${formatCurrency(userBorrowed)}</div>
+                                <div class="user-stat-label">បានខ្ចី</div>
+                            </div>
+                            <div class="user-stat">
+                                <div class="user-stat-value">${formatCurrency(userPaid)}</div>
+                                <div class="user-stat-label">បានសង</div>
+                            </div>
+                        </div>
+                    `;
+                    usersGrid.appendChild(userCard);
+                }
+            });
+        }
+
+        // Update alerts page
+        function updateAlertsPage() {
+            const users = getUsers();
+            const alertsGrid = document.getElementById('alerts-grid');
+            alertsGrid.innerHTML = '';
+
+            // For demo purposes, show some sample alerts
+            const sampleAlerts = [
+                {
+                    title: "ការខ្ចីប្រាក់ពី User1",
+                    amount: 50000,
+                    dueDate: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000),
+                    status: "Due Soon"
+                },
+                {
+                    title: "ការខ្ចីប្រាក់ពី User2", 
+                    amount: 75000,
+                    dueDate: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000),
+                    status: "Overdue"
+                }
+            ];
+
+            // Populate grid
+            if (sampleAlerts.length === 0) {
+                alertsGrid.innerHTML = `
+                    <div class="alert-card" style="grid-column: 1 / -1; text-align: center; padding: 3rem;">
+                        <i class="fas fa-check-circle" style="font-size: 3rem; color: #10b981; margin-bottom: 1rem;"></i>
+                        <h3 style="margin-bottom: 0.5rem;">គ្មានការជូនដំណឹងការបង់ប្រាក់នៅពេលនេះ</h3>
+                        <p style="color: var(--gray);">គ្មានការខ្ចីប្រាក់ណាដែលត្រូវសងក្នុងពេលឆាប់ៗនេះទេ។</p>
+                    </div>
+                `;
+            } else {
+                sampleAlerts.forEach(alert => {
+                    const alertCard = document.createElement('div');
+                    const statusClass = alert.status === 'Overdue' ? 'overdue' : '';
+                    const statusText = alert.status === 'Overdue' ? 'ហួសកាលបរិច្ឆេទ' : 'ត្រូវសងឆាប់';
+
+                    alertCard.className = `alert-card ${statusClass}`;
+                    alertCard.innerHTML = `
+                        <div class="alert-header">
+                            <div class="alert-icon">
+                                <i class="fas ${statusClass ? 'fa-exclamation-triangle' : 'fa-clock'}"></i>
+                            </div>
+                            <div>
+                                <div class="alert-title">${alert.title}</div>
+                                <div class="alert-meta">${statusText}</div>
+                            </div>
+                        </div>
+                        <div class="alert-amount">${formatCurrency(alert.amount)}</div>
+                        <div class="alert-meta">កាលបរិច្ឆេទសង: ${formatDate(alert.dueDate)}</div>
+                        <div class="alert-actions">
+                            <button class="btn btn-success">
+                                <i class="fas fa-check"></i> សម្គាល់ថាបានបង់
+                            </button>
+                        </div>
+                    `;
+                    alertsGrid.appendChild(alertCard);
+                });
+            }
+        }
+
+        // Update settings page
+        function updateSettingsPage() {
+            const currentUser = getCurrentUser();
+            if (!currentUser) return;
+
+            // Update profile avatar
+            document.getElementById('profile-avatar').textContent = currentUser.username.charAt(0).toUpperCase();
+
+            // Show/hide admin-only sections
+            document.querySelectorAll('.admin-only').forEach(el => {
+                el.style.display = (currentUser.role === 'owner' || currentUser.role === 'admin') ? 'block' : 'none';
+            });
+
+            // Update users list for admin/owner
+            if (currentUser.role === 'owner' || currentUser.role === 'admin') {
+                updateUsersList();
+            }
+        }
+
+        // Update users list in settings
+        function updateUsersList() {
+            const users = getUsers();
+            const currentUser = getCurrentUser();
+            const usersList = document.getElementById('users-list');
+            usersList.innerHTML = '';
+
+            users.forEach(user => {
+                if (user.username !== currentUser.username) {
+                    const userItem = document.createElement('div');
+                    userItem.className = 'settings-row';
+                    userItem.innerHTML = `
+                        <div class="form-group" style="flex: 1;">
+                            <label class="form-label">អ្នកប្រើ: ${user.username}</label>
+                            <input type="text" class="form-control" value="${user.role === 'admin' ? 'អ្នកគ្រប់គ្រង' : 'អ្នកប្រើ'}" readonly>
+                        </div>
+                        <button class="btn edit-user-btn" data-username="${user.username}">
+                            <i class="fas fa-edit"></i> កែសម្រួល
+                        </button>
+                    `;
+                    usersList.appendChild(userItem);
+                }
+            });
+
+            // Add event listeners to edit buttons
+            document.querySelectorAll('.edit-user-btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    const username = this.getAttribute('data-username');
+                    openUserManagementModal(username);
+                });
+            });
+        }
+
+        // Open user management modal
+        function openUserManagementModal(username) {
+            const users = getUsers();
+            const user = users.find(u => u.username === username);
+
+            if (user) {
+                document.getElementById('edit-username').value = user.username;
+                document.getElementById('edit-password').value = '';
+                document.getElementById('edit-role').value = user.role;
+
+                const modal = document.getElementById('user-management-modal');
+                modal.classList.add('show');
+
+                // Set up event listeners for modal buttons
+                document.getElementById('save-user-btn').onclick = function() {
+                    saveUserChanges(username);
+                };
+
+                document.getElementById('delete-user-btn').onclick = function() {
+                    deleteUser(username);
+                };
+            }
+        }
+
+        // Save user changes
+        function saveUserChanges(oldUsername) {
+            const newUsername = document.getElementById('edit-username').value.trim();
+            const newPassword = document.getElementById('edit-password').value.trim();
+            const newRole = document.getElementById('edit-role').value;
+
+            if (!newUsername) {
+                showToast('សូមបញ្ចូលឈ្មោះអ្នកប្រើ', 'error');
+                return;
+            }
+
+            const users = getUsers();
+            const userIndex = users.findIndex(u => u.username === oldUsername);
+
+            if (userIndex !== -1) {
+                // Check if new username already exists (and it's not the same user)
+                const existingUser = users.find(u => u.username === newUsername && u.username !== oldUsername);
+                if (existingUser) {
+                    showToast('ឈ្មោះអ្នកប្រើនេះមានរួចហើយ', 'error');
+                    return;
+                }
+
+                users[userIndex].username = newUsername;
+                users[userIndex].role = newRole;
+                if (newPassword) {
+                    users[userIndex].password = newPassword;
+                }
+
+                saveUsers(users);
+
+                // Update current user if it's the same user
+                const currentUser = getCurrentUser();
+                if (currentUser && currentUser.username === oldUsername) {
+                    setCurrentUser(users[userIndex]);
+                    document.getElementById('user-name').textContent = newUsername;
+                    document.getElementById('user-role').textContent = newRole === 'admin' ? 'អ្នកគ្រប់គ្រង' : 'អ្នកប្រើ';
+                    document.getElementById('user-avatar').textContent = newUsername.charAt(0).toUpperCase();
+                }
+
+                closeUserManagementModal();
+                updateSettingsPage();
+                showToast('បានធ្វើបច្ចុប្បន្នភាពអ្នកប្រើដោយជោគជ័យ');
+            }
+        }
+
+        // Delete user
+        function deleteUser(username) {
+            if (confirm(`តើអ្នកពិតជាចង់លុបអ្នកប្រើ "${username}" មែនទេ? សកម្មភាពនេះមិនអាចត្រឡប់ក្រោយបានទេ។`)) {
+                const users = getUsers();
+                const updatedUsers = users.filter(u => u.username !== username);
+
+                saveUsers(updatedUsers);
+                closeUserManagementModal();
+                updateSettingsPage();
+                showToast('បានលុបអ្នកប្រើដោយជោគជ័យ');
+            }
+        }
+
+        // Close user management modal
+        function closeUserManagementModal() {
+            const modal = document.getElementById('user-management-modal');
+            modal.classList.remove('show');
+        }
+
+        // Borrow money
+        function borrowMoney(amount, borrowerName, dueDate = null) {
+            const currentUser = getCurrentUser();
+            if (!currentUser) return;
+
+            const users = getUsers();
+            const userIndex = users.findIndex(u => u.username === currentUser.username);
+
+            if (userIndex !== -1) {
+                users[userIndex].balance += amount;
+
+                // Add to history
+                const transaction = {
+                    date: new Date().toISOString(),
+                    type: 'Borrow',
+                    amount: amount,
+                    balance: users[userIndex].balance,
+                    borrowerName: borrowerName
+                };
+
+                if (dueDate) {
+                    transaction.dueDate = dueDate;
+                }
+
+                users[userIndex].history.push(transaction);
+
+                saveUsers(users);
+                setCurrentUser(users[userIndex]);
+                updateWalletPage();
+                updateDashboardPage();
+
+                let message = `បានខ្ចី ${formatCurrency(amount)} ដោយជោគជ័យ`;
+                if (borrowerName) {
+                    message += ` សម្រាប់ ${borrowerName}`;
+                }
+
+                showToast(message);
+            }
+        }
+
+        // Pay back money
+        function payBackMoney(amount, paybackName) {
+            const currentUser = getCurrentUser();
+            if (!currentUser) return;
+
+            const users = getUsers();
+            const userIndex = users.findIndex(u => u.username === currentUser.username);
+
+            if (userIndex !== -1) {
+                if (amount > users[userIndex].balance) {
+                    showToast('ចំនួនទឹកប្រាក់បង់លើសសមតុល្យបច្ចុប្បន្ន', 'error');
+                    return;
+                }
+
+                users[userIndex].balance -= amount;
+
+                // Add to history
+                users[userIndex].history.push({
+                    date: new Date().toISOString(),
+                    type: 'Pay Back',
+                    amount: -amount,
+                    balance: users[userIndex].balance,
+                    paybackName: paybackName
+                });
+
+                saveUsers(users);
+                setCurrentUser(users[userIndex]);
+                updateWalletPage();
+                updateDashboardPage();
+
+                showToast(`បានសង ${formatCurrency(amount)} ដោយជោគជ័យ ដោយ ${paybackName}`);
+            }
+        }
+
+        // Business transaction
+        function businessTransaction(amount, description, isIncome = true, timeSlot = 'morning') {
+            const currentUser = getCurrentUser();
+            if (!currentUser || (currentUser.role !== 'owner' && currentUser.role !== 'admin')) return;
+
+            const users = getUsers();
+            const userIndex = users.findIndex(u => u.username === currentUser.username);
+
+            if (userIndex !== -1) {
+                if (isIncome) {
+                    users[userIndex].balance += amount;
+                } else {
+                    if (amount > users[userIndex].balance) {
+                        showToast('ចំនួនទឹកប្រាក់ចំណាយលើសសមតុល្យបច្ចុប្បន្ន', 'error');
+                        return;
+                    }
+                    users[userIndex].balance -= amount;
+                }
+
+                // Add to history
+                users[userIndex].history.push({
+                    date: new Date().toISOString(),
+                    type: isIncome ? 'Business Income' : 'Business Expense',
+                    amount: isIncome ? amount : -amount,
+                    balance: users[userIndex].balance,
+                    description: description,
+                    timeSlot: timeSlot
+                });
+
+                saveUsers(users);
+                setCurrentUser(users[userIndex]);
+                updateWalletPage();
+                updateDashboardPage();
+
+                const message = `${isIncome ? 'បានបញ្ចូលចំណូល' : 'បានចំណាយ'} ${formatCurrency(amount)} ពីអាជីវកម្ម: ${description}`;
+                showToast(message);
+            }
+        }
+
+        // Export history as JSON
+        function exportHistory() {
+            const currentUser = getCurrentUser();
+            const users = getUsers();
+
+            let allHistory = [];
+
+            if (currentUser.role === 'owner' || currentUser.role === 'admin') {
+                // Show all users' history
+                users.forEach(user => {
+                    user.history.forEach(transaction => {
+                        allHistory.push({
+                            ...transaction,
+                            user: user.username
+                        });
+                    });
+                });
+            } else {
+                // Show only current user's history
+                const user = users.find(u => u.username === currentUser.username);
+                if (user) {
+                    allHistory = user.history.map(transaction => ({
+                        ...transaction,
+                        user: user.username
+                    }));
+                }
+            }
+
+            const dataStr = JSON.stringify(allHistory, null, 2);
+            const dataBlob = new Blob([dataStr], { type: 'application/json' });
+
+            const url = URL.createObjectURL(dataBlob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `family-wallet-history-${new Date().toISOString().split('T')[0]}.json`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+
+            showToast('បាននាំចេញប្រវត្តិដោយជោគជ័យ');
+        }
+
+        // Change username
+        function changeUsername(newUsername) {
+            const currentUser = getCurrentUser();
+            if (!currentUser) return;
+
+            const users = getUsers();
+            const userIndex = users.findIndex(u => u.username === currentUser.username);
+
+            if (userIndex !== -1) {
+                // Check if username already exists
+                const existingUser = users.find(u => u.username === newUsername);
+                if (existingUser) {
+                    showToast('ឈ្មោះអ្នកប្រើនេះមានរួចហើយ', 'error');
+                    return;
+                }
+
+                users[userIndex].username = newUsername;
+                saveUsers(users);
+                setCurrentUser(users[userIndex]);
+
+                document.getElementById('user-name').textContent = newUsername;
+                document.getElementById('user-avatar').textContent = newUsername.charAt(0).toUpperCase();
+                document.getElementById('profile-avatar').textContent = newUsername.charAt(0).toUpperCase();
+                document.getElementById('change-username').value = '';
+
+                showToast('បានផ្លាស់ប្តូរឈ្មោះអ្នកប្រើដោយជោគជ័យ');
+            }
+        }
+
+        // Change password
+        function changePassword(newPassword) {
+            const currentUser = getCurrentUser();
+            if (!currentUser) return;
+
+            const users = getUsers();
+            const userIndex = users.findIndex(u => u.username === currentUser.username);
+
+            if (userIndex !== -1) {
+                users[userIndex].password = newPassword;
+                saveUsers(users);
+                setCurrentUser(users[userIndex]);
+
+                document.getElementById('change-password').value = '';
+                showToast('បានផ្លាស់ប្តូរពាក្យសម្ងាត់ដោយជោគជ័យ');
+            }
+        }
+
+        // Add new user
+        function addUser(username, password, role) {
+            const currentUser = getCurrentUser();
+            if (currentUser.role !== 'owner' && currentUser.role !== 'admin') return;
+
+            const users = getUsers();
+
+            // Check if username already exists
+            const existingUser = users.find(u => u.username === username);
+            if (existingUser) {
+                showToast('ឈ្មោះអ្នកប្រើនេះមានរួចហើយ', 'error');
+                return;
+            }
+
+            // Add new user
+            users.push({
+                username: username,
+                password: password,
+                role: role,
+                balance: 0,
+                history: []
+            });
+
+            saveUsers(users);
+
+            document.getElementById('new-username').value = '';
+            document.getElementById('new-password').value = '';
+
+            updateSettingsPage();
+            showToast('បានបន្ថែមអ្នកប្រើថ្មីដោយជោគជ័យ');
+        }
+
+        // Initialize the app
+        function initApp() {
+            // Initialize users
+            initializeUsers();
+            
+            // Start time display
+            updateTime();
+            setInterval(updateTime, 1000);
+
+            // Check if user is already logged in
+            const currentUser = getCurrentUser();
+            if (currentUser) {
+                document.getElementById('user-name').textContent = currentUser.username;
+                document.getElementById('user-role').textContent = currentUser.role === 'owner' ? 'ម្ចាស់' : currentUser.role === 'admin' ? 'អ្នកគ្រប់គ្រង' : 'អ្នកប្រើ';
+                document.getElementById('user-avatar').textContent = currentUser.username.charAt(0).toUpperCase();
+
+                document.getElementById('login-page').style.display = 'none';
+                document.getElementById('app-container').style.display = 'flex';
+
+                // Show/hide admin-only elements
+                document.querySelectorAll('.admin-only').forEach(el => {
+                    el.style.display = (currentUser.role === 'owner' || currentUser.role === 'admin') ? 'flex' : 'none';
+                });
+
+                updateDashboardPage();
+            } else {
+                document.getElementById('login-page').style.display = 'flex';
+                document.getElementById('app-container').style.display = 'none';
+            }
+
+            // Login form submission
+            document.getElementById('login-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+
+                const username = document.getElementById('username').value;
+                const password = document.getElementById('password').value;
+
+                const users = getUsers();
+                const user = users.find(u => u.username === username && u.password === password);
+
+                if (user) {
+                    setCurrentUser(user);
+                    document.getElementById('user-name').textContent = user.username;
+                    document.getElementById('user-role').textContent = user.role === 'owner' ? 'ម្ចាស់' : user.role === 'admin' ? 'អ្នកគ្រប់គ្រង' : 'អ្នកប្រើ';
+                    document.getElementById('user-avatar').textContent = user.username.charAt(0).toUpperCase();
+
+                    document.getElementById('login-page').style.display = 'none';
+                    document.getElementById('app-container').style.display = 'flex';
+
+                    // Show/hide admin-only elements
+                    document.querySelectorAll('.admin-only').forEach(el => {
+                        el.style.display = (user.role === 'owner' || user.role === 'admin') ? 'flex' : 'none';
+                    });
+
+                    updateDashboardPage();
+                    showToast(`សូមស្វាគមន៍ការត្រឡប់មកវិញ, ${user.username}!`);
+                } else {
+                    showToast('ឈ្មោះអ្នកប្រើ ឬពាក្យសម្ងាត់មិនត្រឹមត្រូវ', 'error');
+                }
+            });
+
+            // Logout button
+            document.getElementById('logout-btn').addEventListener('click', function() {
+                clearCurrentUser();
+                document.getElementById('login-page').style.display = 'flex';
+                document.getElementById('app-container').style.display = 'none';
+                showToast('បានចាកចេញដោយជោគជ័យ');
+            });
+
+            // Navigation
+            document.querySelectorAll('.nav-item').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const pageId = this.getAttribute('data-page') + '-page';
+                    navigateTo(pageId);
+                });
+            });
+
+            // Quick actions
+            document.getElementById('quick-borrow').addEventListener('click', function() {
+                navigateTo('wallet-page');
+            });
+
+            document.getElementById('quick-payback').addEventListener('click', function() {
+                navigateTo('wallet-page');
+            });
+
+            document.getElementById('quick-history').addEventListener('click', function() {
+                navigateTo('history-page');
+            });
+
+            document.getElementById('quick-business').addEventListener('click', function() {
+                navigateTo('wallet-page');
+            });
+
+            // Wallet actions
+            document.getElementById('borrow-btn').addEventListener('click', function() {
+                const borrowerName = document.getElementById('borrow-name').value.trim();
+                const amount = parseFloat(document.getElementById('borrow-amount').value) || 0;
+
+                if (!borrowerName) {
+                    showToast('សូមបញ្ចូលឈ្មោះអ្នកខ្ចី', 'error');
+                    return;
+                }
+
+                if (amount <= 0) {
+                    showToast('សូមបញ្ចូលចំនួនទឹកប្រាក់ត្រឹមត្រូវ', 'error');
+                    return;
+                }
+
+                let dueDate = null;
+                const dueDateToggle = document.getElementById('borrow-due-date-toggle');
+                if (dueDateToggle.checked) {
+                    dueDate = document.getElementById('borrow-due-date').value;
+                    if (!dueDate) {
+                        showToast('សូមជ្រើសរើសកាលបរិច្ឆេទសង', 'error');
+                        return;
+                    }
+                }
+
+                borrowMoney(amount, borrowerName, dueDate);
+                document.getElementById('borrow-name').value = '';
+                document.getElementById('borrow-amount').value = '';
+                document.getElementById('borrow-due-date').value = '';
+                dueDateToggle.checked = false;
+            });
+
+            document.getElementById('payback-btn').addEventListener('click', function() {
+                const amount = parseFloat(document.getElementById('payback-amount').value) || 0;
+                const paybackName = document.getElementById('payback-name').value.trim();
+
+                if (amount <= 0) {
+                    showToast('សូមបញ្ចូលចំនួនទឹកប្រាក់ត្រឹមត្រូវ', 'error');
+                    return;
+                }
+
+                if (!paybackName) {
+                    showToast('សូមបញ្ចូលឈ្មោះអ្នកសង', 'error');
+                    return;
+                }
+
+                payBackMoney(amount, paybackName);
+                document.getElementById('payback-amount').value = '';
+                document.getElementById('payback-name').value = '';
+            });
+
+            // Business actions
+            document.getElementById('business-type-toggle').addEventListener('change', function() {
+                const isIncome = !this.checked;
+                document.getElementById('business-type-label').textContent = isIncome ? 'ចំណូល' : 'ចំណាយ';
+            });
+
+            document.getElementById('business-btn').addEventListener('click', function() {
+                const amount = parseFloat(document.getElementById('business-amount').value) || 0;
+                const description = document.getElementById('business-description').value.trim();
+                const isIncome = !document.getElementById('business-type-toggle').checked;
+                const timeSlot = document.getElementById('business-time').value;
+
+                if (amount <= 0) {
+                    showToast('សូមបញ្ចូលចំនួនទឹកប្រាក់ត្រឹមត្រូវ', 'error');
+                    return;
+                }
+
+                if (!description) {
+                    showToast('សូមបញ្ចូលការពិពណ៌នា', 'error');
+                    return;
+                }
+
+                businessTransaction(amount, description, isIncome, timeSlot);
+                document.getElementById('business-amount').value = '';
+                document.getElementById('business-description').value = '';
+            });
+
+            // Export buttons
+            document.getElementById('export-history-btn').addEventListener('click', exportHistory);
+
+            // History filters
+            document.getElementById('history-filter').addEventListener('change', updateHistoryPage);
+
+            // Alert banner actions
+            document.getElementById('dismiss-alert-btn').addEventListener('click', function() {
+                document.getElementById('alert-banner').style.display = 'none';
+            });
+
+            // Set minimum date for due date to today
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('borrow-due-date').min = today;
+
+            // Theme toggle
+            document.getElementById('theme-toggle').addEventListener('click', function() {
+                const isDark = document.body.getAttribute('data-theme') === 'dark';
+                document.body.setAttribute('data-theme', isDark ? 'light' : 'dark');
+                localStorage.setItem('theme', isDark ? 'light' : 'dark');
+                this.innerHTML = isDark ? '<i class="fas fa-moon"></i> Dark Mode' : '<i class="fas fa-sun"></i> Light Mode';
+            });
+
+            // Initialize theme
+            if (localStorage.getItem('theme') === 'dark') {
+                document.body.setAttribute('data-theme', 'dark');
+                document.getElementById('theme-toggle').innerHTML = '<i class="fas fa-sun"></i> Light Mode';
+            }
+
+            // Mobile menu toggle
+            document.getElementById('mobile-menu-toggle').addEventListener('click', function() {
+                const sidebar = document.querySelector('.sidebar');
+                sidebar.classList.toggle('mobile-open');
+            });
+
+            // Profile management
+            document.getElementById('change-username-btn').addEventListener('click', function() {
+                const newUsername = document.getElementById('change-username').value.trim();
+                if (!newUsername) {
+                    showToast('សូមបញ្ចូលឈ្មោះអ្នកប្រើថ្មី', 'error');
+                    return;
+                }
+                changeUsername(newUsername);
+            });
+
+            document.getElementById('change-password-btn').addEventListener('click', function() {
+                const newPassword = document.getElementById('change-password').value.trim();
+                if (!newPassword) {
+                    showToast('សូមបញ្ចូលពាក្យសម្ងាត់ថ្មី', 'error');
+                    return;
+                }
+                changePassword(newPassword);
+            });
+
+            // User management
+            document.getElementById('add-user-btn').addEventListener('click', function() {
+                const username = document.getElementById('new-username').value.trim();
+                const password = document.getElementById('new-password').value.trim();
+                const role = document.getElementById('new-role').value;
+
+                if (!username) {
+                    showToast('សូមបញ្ចូលឈ្មោះអ្នកប្រើ', 'error');
+                    return;
+                }
+
+                if (!password) {
+                    showToast('សូមបញ្ចូលពាក្យសម្ងាត់', 'error');
+                    return;
+                }
+
+                addUser(username, password, role);
+            });
+
+            // Modal close button
+            document.getElementById('close-user-modal').addEventListener('click', closeUserManagementModal);
+
+            // Time slot selection
+            document.querySelectorAll('.time-slot').forEach(slot => {
+                slot.addEventListener('click', function() {
+                    const timeValue = this.getAttribute('data-time');
+                    document.getElementById('business-time').value = timeValue;
+                    
+                    // Update active state
+                    document.querySelectorAll('.time-slot').forEach(s => s.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
+        }
+
+        // Initialize the app when DOM is loaded
+        document.addEventListener('DOMContentLoaded', initApp);
+    </script>
+</body>
+</html>
