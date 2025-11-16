@@ -18,13 +18,14 @@
             --dark: #0F172A;
             --gray: #64748B;
             --gray-light: #E2E8F0;
-            --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-            --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-            --radius: 16px;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --radius: 12px;
             --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             --gradient: linear-gradient(135deg, var(--primary), var(--primary-dark));
             --gradient-accent: linear-gradient(135deg, var(--accent), #00A87A);
         }
+        
         [data-theme="dark"] {
             --light: #0f172a;
             --dark: #f1f5f9;
@@ -33,129 +34,163 @@
             background: #0f172a;
             color: #e2e8f0;
         }
+        
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
             font-family: 'Kantumruy Pro', 'Inter', sans-serif;
         }
+        
         body {
             background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
             color: var(--secondary);
             min-height: 100vh;
             line-height: 1.6;
             transition: var(--transition);
+            overflow-x: hidden;
         }
+        
         [data-theme="dark"] body {
             background: #0f172a;
         }
+        
         .app-container {
             display: flex;
+            flex-direction: column;
             min-height: 100vh;
         }
-        /* Sidebar Styles */
-        .sidebar {
-            width: 280px;
+        
+        /* Mobile Header */
+        .mobile-header {
             background: var(--dark);
             color: white;
-            padding: 1.5rem 0;
+            padding: 1rem;
             display: flex;
-            flex-direction: column;
-            transition: var(--transition);
+            justify-content: space-between;
+            align-items: center;
             box-shadow: var(--shadow);
-            z-index: 100;
-            position: relative;
-            overflow: hidden;
-        }
-        .sidebar::before {
-            content: '';
-            position: absolute;
+            position: sticky;
             top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: var(--gradient);
+            z-index: 100;
         }
-        .logo {
+        
+        .mobile-header .logo {
             display: flex;
             align-items: center;
-            gap: 12px;
-            padding: 0 1.5rem 2rem;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            gap: 10px;
         }
+        
         .logo-icon {
-            width: 44px;
-            height: 44px;
+            width: 36px;
+            height: 36px;
             background: var(--gradient);
-            border-radius: 12px;
+            border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.3rem;
-            box-shadow: 0 4px 12px rgba(45, 91, 255, 0.3);
+            font-size: 1.1rem;
         }
+        
         .logo-text {
-            font-size: 1.6rem;
+            font-size: 1.2rem;
             font-weight: 700;
             background: linear-gradient(90deg, #60a5fa, #c084fc);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
-        .nav-links {
-            flex: 1;
-            padding: 2rem 0;
+        
+        .mobile-menu-toggle {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
         }
-        .nav-item {
-            padding: 1rem 1.5rem;
+        
+        /* Mobile Navigation */
+        .mobile-nav {
+            position: fixed;
+            top: 0;
+            left: -100%;
+            width: 85%;
+            max-width: 320px;
+            height: 100%;
+            background: var(--dark);
+            z-index: 200;
+            transition: var(--transition);
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .mobile-nav.active {
+            left: 0;
+        }
+        
+        .mobile-nav-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .mobile-nav-close {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        .mobile-nav-links {
+            flex: 1;
+        }
+        
+        .mobile-nav-item {
             display: flex;
             align-items: center;
-            gap: 14px;
+            gap: 12px;
+            padding: 1rem 0;
             color: rgba(255, 255, 255, 0.7);
             text-decoration: none;
             transition: var(--transition);
-            border-left: 4px solid transparent;
-            margin: 4px 0;
-            position: relative;
-            border-radius: 0 12px 12px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
         }
-        .nav-item:hover, .nav-item.active {
-            background: rgba(255, 255, 255, 0.05);
+        
+        .mobile-nav-item.active, .mobile-nav-item:hover {
             color: white;
-            border-left-color: var(--primary);
         }
-        .nav-item i {
-            width: 20px;
+        
+        .mobile-nav-item i {
+            width: 24px;
             text-align: center;
-            font-size: 1.1rem;
         }
+        
         .notification-badge {
-            position: absolute;
-            right: 1.5rem;
             background: var(--danger);
             color: white;
             border-radius: 50%;
-            width: 22px;
-            height: 22px;
+            width: 20px;
+            height: 20px;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 0.7rem;
-            font-weight: bold;
-            box-shadow: 0 2px 8px rgba(255, 71, 87, 0.4);
-            animation: pulse 2s infinite;
+            margin-left: auto;
         }
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.7; }
-        }
-        .user-profile {
-            padding: 1.5rem;
+        
+        .mobile-user-profile {
+            padding-top: 1rem;
             border-top: 1px solid rgba(255, 255, 255, 0.1);
             display: flex;
             align-items: center;
             gap: 12px;
-            background: rgba(255, 255, 255, 0.03);
         }
+        
         .user-avatar {
             width: 44px;
             height: 44px;
@@ -166,19 +201,22 @@
             justify-content: center;
             font-weight: bold;
             font-size: 1.1rem;
-            box-shadow: 0 4px 12px rgba(45, 91, 255, 0.3);
         }
+        
         .user-info {
             flex: 1;
         }
+        
         .user-name {
             font-weight: 600;
             font-size: 0.95rem;
         }
+        
         .user-role {
             font-size: 0.8rem;
             color: rgba(255, 255, 255, 0.6);
         }
+        
         .logout-btn {
             background: rgba(255, 255, 255, 0.1);
             border: none;
@@ -192,89 +230,99 @@
             align-items: center;
             justify-content: center;
         }
+        
         .logout-btn:hover {
             background: rgba(255, 255, 255, 0.15);
             color: white;
         }
+        
         /* Main Content */
         .main-content {
             flex: 1;
-            display: flex;
-            flex-direction: column;
-            overflow: auto;
+            padding: 1rem;
+            overflow-y: auto;
         }
+        
         .top-bar {
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(12px);
-            padding: 1.25rem 2rem;
+            padding: 1rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
             box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-            position: sticky;
-            top: 0;
-            z-index: 50;
+            border-radius: var(--radius);
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+            gap: 0.5rem;
         }
+        
         [data-theme="dark"] .top-bar {
             background: rgba(15, 23, 42, 0.95);
         }
+        
         .page-title {
-            font-size: 1.6rem;
+            font-size: 1.4rem;
             font-weight: 700;
             color: var(--dark);
             display: flex;
             align-items: center;
             gap: 10px;
         }
+        
         .page-title i {
             color: var(--primary);
         }
+        
         .top-bar-actions {
             display: flex;
-            gap: 1rem;
+            gap: 0.5rem;
             align-items: center;
+            flex-wrap: wrap;
         }
+        
         .currency-badge {
             background: var(--gradient);
             color: white;
-            padding: 6px 12px;
+            padding: 6px 10px;
             border-radius: 20px;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             font-weight: 600;
             display: flex;
             align-items: center;
             gap: 6px;
         }
+        
         .time-display {
             display: flex;
             align-items: center;
-            gap: 8px;
-            padding: 6px 12px;
+            gap: 6px;
+            padding: 6px 10px;
             background: rgba(255, 255, 255, 0.1);
             border-radius: 20px;
-            font-size: 0.9rem;
+            font-size: 0.8rem;
         }
+        
         .greeting {
-            font-size: 1rem;
-            margin-right: 10px;
+            font-size: 0.9rem;
+            margin-right: 5px;
         }
-        .content-area {
-            flex: 1;
-            padding: 2rem;
-            overflow-y: auto;
-        }
+        
         /* Page Styles */
         .page {
             display: none;
             animation: fadeIn 0.5s ease;
         }
+        
         .page.active {
             display: block;
         }
+        
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
+        
         /* Login Page */
         .login-container {
             display: flex;
@@ -284,65 +332,77 @@
             background: linear-gradient(135deg, #667eea, #764ba2);
             padding: 1rem;
         }
+        
         .login-card {
             background: white;
             border-radius: var(--radius);
-            padding: 2.5rem;
+            padding: 2rem;
             box-shadow: var(--shadow-lg);
             width: 100%;
-            max-width: 420px;
+            max-width: 400px;
             text-align: center;
         }
+        
         [data-theme="dark"] .login-card {
             background: #1e293b;
         }
+        
         .login-header {
-            margin-bottom: 2rem;
+            margin-bottom: 1.5rem;
         }
+        
         .login-logo {
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 12px;
-            margin-bottom: 1.5rem;
+            margin-bottom: 1rem;
         }
+        
         .login-card h2 {
             margin: 1rem 0;
             color: var(--dark);
         }
+        
         .login-card p {
             color: var(--gray);
             margin-bottom: 1.5rem;
         }
+        
         .form-group {
             margin-bottom: 1.5rem;
             text-align: left;
         }
+        
         .form-label {
             display: block;
             margin-bottom: 0.5rem;
             font-weight: 500;
             color: var(--dark);
         }
+        
         .form-control {
             width: 100%;
             padding: 14px;
             border: 1px solid var(--gray-light);
-            border-radius: 12px;
+            border-radius: 10px;
             font-size: 1rem;
             transition: var(--transition);
             background: white;
         }
+        
         [data-theme="dark"] .form-control {
             background: #1e293b;
             border-color: #334155;
             color: white;
         }
+        
         .form-control:focus {
             outline: none;
             border-color: var(--primary);
-            box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.2);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
         }
+        
         .btn {
             display: inline-flex;
             align-items: center;
@@ -351,159 +411,112 @@
             background: var(--gradient);
             color: white;
             border: none;
-            padding: 12px 24px;
-            border-radius: 12px;
+            padding: 12px 20px;
+            border-radius: 10px;
             cursor: pointer;
             font-size: 1rem;
             font-weight: 600;
             transition: var(--transition);
         }
+        
         .btn:hover {
             transform: translateY(-2px);
             box-shadow: var(--shadow);
         }
+        
         .btn-block {
             width: 100%;
         }
+        
         .btn-success {
             background: var(--gradient-accent);
         }
+        
         .btn-danger {
             background: linear-gradient(135deg, var(--danger), #FF2E43);
         }
+        
         .btn-warning {
             background: linear-gradient(135deg, var(--warning), #FF8A1E);
         }
+        
         /* Dashboard Page */
-        .dashboard-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 2rem;
-        }
         .welcome-card {
             background: var(--gradient);
             color: white;
             border-radius: var(--radius);
-            padding: 2rem;
+            padding: 1.5rem;
             box-shadow: var(--shadow);
-            margin-bottom: 2rem;
+            margin-bottom: 1.5rem;
             animation: slideInDown 0.6s ease;
             position: relative;
             overflow: hidden;
         }
+        
         @keyframes slideInDown {
             from { opacity: 0; transform: translateY(-20px); }
             to { opacity: 1; transform: translateY(0); }
         }
+        
         .welcome-card::before {
             content: '';
             position: absolute;
             top: -50%;
             right: -20%;
-            width: 200px;
-            height: 200px;
+            width: 150px;
+            height: 150px;
             background: rgba(255, 255, 255, 0.1);
             border-radius: 50%;
         }
+        
         .welcome-card h2 {
-            font-size: 1.8rem;
+            font-size: 1.4rem;
             margin-bottom: 0.5rem;
         }
+        
         .welcome-card p {
             opacity: 0.9;
-            max-width: 600px;
+            font-size: 0.9rem;
         }
+        
         .stats-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 2rem;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin-bottom: 1.5rem;
         }
+        
         .stat-card {
             background: white;
             border-radius: var(--radius);
-            padding: 1.5rem;
+            padding: 1rem;
             box-shadow: var(--shadow);
             display: flex;
             align-items: center;
-            gap: 1rem;
+            gap: 0.75rem;
             animation: zoomIn 0.5s ease;
             transition: var(--transition);
             border-left: 4px solid var(--primary);
         }
+        
         [data-theme="dark"] .stat-card {
             background: #1e293b;
         }
+        
         .stat-card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-3px);
             box-shadow: var(--shadow-lg);
         }
+        
         @keyframes zoomIn {
             from { opacity: 0; transform: scale(0.9); }
             to { opacity: 1; transform: scale(1); }
         }
+        
         .stat-icon {
-            width: 60px;
-            height: 60px;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            background: rgba(45, 91, 255, 0.1);
-            color: var(--primary);
-        }
-        .stat-info {
-            flex: 1;
-        }
-        .stat-value {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: var(--dark);
-            margin-bottom: 0.25rem;
-        }
-        .stat-label {
-            font-size: 0.9rem;
-            color: var(--gray);
-        }
-        .quick-actions {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 2rem;
-        }
-        .action-btn {
-            background: white;
-            border: none;
-            border-radius: var(--radius);
-            padding: 1.5rem;
-            box-shadow: var(--shadow);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 12px;
-            cursor: pointer;
-            transition: var(--transition);
-            text-align: center;
-        }
-        [data-theme="dark"] .action-btn {
-            background: #1e293b;
-        }
-        .action-btn:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--shadow-lg);
-            background: var(--primary);
-            color: white;
-        }
-        .action-btn:hover .action-icon {
-            background: rgba(255, 255, 255, 0.2);
-            color: white;
-        }
-        .action-icon {
             width: 50px;
             height: 50px;
-            border-radius: 12px;
+            border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -511,15 +524,84 @@
             background: rgba(45, 91, 255, 0.1);
             color: var(--primary);
         }
+        
+        .stat-info {
+            flex: 1;
+        }
+        
+        .stat-value {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 0.25rem;
+        }
+        
+        .stat-label {
+            font-size: 0.8rem;
+            color: var(--gray);
+        }
+        
+        .quick-actions {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .action-btn {
+            background: white;
+            border: none;
+            border-radius: var(--radius);
+            padding: 1.25rem;
+            box-shadow: var(--shadow);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            transition: var(--transition);
+            text-align: center;
+        }
+        
+        [data-theme="dark"] .action-btn {
+            background: #1e293b;
+        }
+        
+        .action-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-lg);
+            background: var(--primary);
+            color: white;
+        }
+        
+        .action-btn:hover .action-icon {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+        
+        .action-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            background: rgba(45, 91, 255, 0.1);
+            color: var(--primary);
+        }
+        
         .recent-activity {
             background: white;
             border-radius: var(--radius);
             box-shadow: var(--shadow);
-            padding: 1.5rem;
+            padding: 1.25rem;
         }
+        
         [data-theme="dark"] .recent-activity {
             background: #1e293b;
         }
+        
         .recent-activity h3 {
             margin-bottom: 1rem;
             color: var(--dark);
@@ -527,140 +609,167 @@
             align-items: center;
             gap: 10px;
         }
+        
         .activity-list {
             list-style: none;
         }
+        
         .activity-item {
-            padding: 1rem 0;
+            padding: 0.75rem 0;
             border-bottom: 1px solid var(--gray-light);
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
         }
+        
         .activity-item:last-child {
             border-bottom: none;
         }
+        
         .activity-icon {
-            width: 40px;
-            height: 40px;
-            border-radius: 10px;
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1rem;
+            font-size: 0.9rem;
         }
+        
         .activity-icon.borrow {
             background: rgba(255, 71, 87, 0.1);
             color: var(--danger);
         }
+        
         .activity-icon.payback {
             background: rgba(0, 200, 150, 0.1);
             color: var(--accent);
         }
+        
         .activity-icon.business-income {
             background: rgba(0, 200, 150, 0.1);
             color: var(--accent);
         }
+        
         .activity-icon.business-expense {
             background: rgba(255, 159, 67, 0.1);
             color: var(--warning);
         }
+        
         .activity-details {
             flex: 1;
         }
+        
         .activity-title {
             font-weight: 600;
             margin-bottom: 4px;
+            font-size: 0.9rem;
         }
+        
         .activity-meta {
-            font-size: 0.85rem;
+            font-size: 0.75rem;
             color: var(--gray);
         }
+        
         /* Wallet Page */
         .wallet-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 2rem;
+            margin-bottom: 1.5rem;
         }
+        
         .balance-card {
             background: var(--gradient);
             color: white;
             border-radius: var(--radius);
-            padding: 2.5rem;
+            padding: 1.5rem;
             box-shadow: var(--shadow);
-            margin-bottom: 2rem;
+            margin-bottom: 1.5rem;
             animation: slideInLeft 0.6s ease;
             position: relative;
             overflow: hidden;
         }
+        
         @keyframes slideInLeft {
             from { opacity: 0; transform: translateX(-20px); }
             to { opacity: 1; transform: translateX(0); }
         }
+        
         .balance-card::before {
             content: '';
             position: absolute;
             top: -50%;
             right: -20%;
-            width: 200px;
-            height: 200px;
+            width: 150px;
+            height: 150px;
             background: rgba(255, 255, 255, 0.1);
             border-radius: 50%;
         }
+        
         .balance-label {
-            font-size: 1rem;
+            font-size: 0.9rem;
             opacity: 0.9;
             margin-bottom: 0.5rem;
             display: flex;
             align-items: center;
             gap: 8px;
         }
+        
         .balance-amount {
-            font-size: 3rem;
+            font-size: 2.2rem;
             font-weight: 700;
-            margin-bottom: 1.5rem;
+            margin-bottom: 1rem;
             text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
+        
         .balance-change {
             display: flex;
-            gap: 1.5rem;
+            gap: 1rem;
+            flex-wrap: wrap;
         }
+        
         .change-item {
             display: flex;
             align-items: center;
-            gap: 8px;
-            font-size: 0.95rem;
+            gap: 6px;
+            font-size: 0.85rem;
             background: rgba(255, 255, 255, 0.15);
-            padding: 8px 16px;
+            padding: 6px 12px;
             border-radius: 20px;
         }
+        
         .actions-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            grid-template-columns: 1fr;
             gap: 1.5rem;
-            margin-bottom: 2rem;
+            margin-bottom: 1.5rem;
         }
+        
         .action-card {
             background: white;
             border-radius: var(--radius);
-            padding: 1.5rem;
+            padding: 1.25rem;
             box-shadow: var(--shadow);
             animation: slideInRight 0.6s ease;
             transition: var(--transition);
             border-top: 4px solid var(--primary);
         }
+        
         [data-theme="dark"] .action-card {
             background: #1e293b;
         }
+        
         .action-card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-3px);
             box-shadow: var(--shadow-lg);
         }
+        
         @keyframes slideInRight {
             from { opacity: 0; transform: translateX(20px); }
             to { opacity: 1; transform: translateX(0); }
         }
+        
         .action-card h3 {
             margin-bottom: 1rem;
             color: var(--dark);
@@ -668,20 +777,24 @@
             align-items: center;
             gap: 10px;
         }
+        
         .action-buttons {
             display: flex;
-            gap: 12px;
-            margin-top: 1.5rem;
+            gap: 10px;
+            margin-top: 1.25rem;
         }
+        
         .action-buttons .btn {
             flex: 1;
         }
+        
         /* Due Date Section */
         .due-date-section {
-            margin-top: 1.5rem;
-            padding-top: 1.5rem;
+            margin-top: 1rem;
+            padding-top: 1rem;
             border-top: 1px solid var(--gray-light);
         }
+        
         .due-date-toggle {
             display: flex;
             align-items: center;
@@ -690,22 +803,25 @@
             cursor: pointer;
             padding: 8px 0;
         }
+        
         .due-date-toggle input {
             display: none;
         }
+        
         .toggle-slider {
-            width: 44px;
-            height: 24px;
+            width: 40px;
+            height: 22px;
             background: var(--gray-light);
-            border-radius: 24px;
+            border-radius: 22px;
             position: relative;
             transition: var(--transition);
         }
+        
         .toggle-slider::before {
             content: '';
             position: absolute;
-            width: 18px;
-            height: 18px;
+            width: 16px;
+            height: 16px;
             background: white;
             border-radius: 50%;
             top: 3px;
@@ -713,27 +829,33 @@
             transition: var(--transition);
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
         }
+        
         .due-date-toggle input:checked + .toggle-slider {
             background: var(--accent);
         }
+        
         .due-date-toggle input:checked + .toggle-slider::before {
-            transform: translateX(20px);
+            transform: translateX(18px);
         }
+        
         .due-date-input {
             display: none;
             margin-top: 1rem;
             animation: fadeIn 0.3s ease;
         }
+        
         .due-date-toggle input:checked ~ .due-date-input {
             display: block;
         }
-        /* Payback To Section */
-        .payback-to-section {
-            margin-top: 1.5rem;
-            padding-top: 1.5rem;
+        
+        /* Business Section */
+        .business-section {
+            margin-top: 1rem;
+            padding-top: 1rem;
             border-top: 1px solid var(--gray-light);
         }
-        .payback-to-toggle {
+        
+        .business-toggle {
             display: flex;
             align-items: center;
             gap: 10px;
@@ -741,257 +863,431 @@
             cursor: pointer;
             padding: 8px 0;
         }
-        .payback-to-toggle input {
+        
+        .business-toggle input {
             display: none;
         }
-        .payback-to-input {
+        
+        .business-input {
             display: none;
             margin-top: 1rem;
             animation: fadeIn 0.3s ease;
         }
-        .payback-to-toggle input:checked ~ .payback-to-input {
+        
+        .business-toggle input:checked ~ .business-input {
             display: block;
         }
+        
+        /* Enhanced Business Section */
+        .business-dashboard {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+        
+        .business-summary {
+            background: white;
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+        }
+        
+        [data-theme="dark"] .business-summary {
+            background: #1e293b;
+        }
+        
+        .business-stat {
+            text-align: center;
+            padding: 1rem;
+            border-radius: 10px;
+            background: var(--light);
+        }
+        
+        [data-theme="dark"] .business-stat {
+            background: #1e293b;
+        }
+        
+        .business-stat.income {
+            border-left: 4px solid var(--accent);
+        }
+        
+        .business-stat.expense {
+            border-left: 4px solid var(--warning);
+        }
+        
+        .business-stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+        
+        .business-stat-label {
+            font-size: 0.8rem;
+            color: var(--gray);
+        }
+        
+        .business-form-container {
+            background: white;
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+        }
+        
+        [data-theme="dark"] .business-form-container {
+            background: #1e293b;
+        }
+        
+        .business-form-tabs {
+            display: flex;
+            border-bottom: 1px solid var(--gray-light);
+            margin-bottom: 1.5rem;
+        }
+        
+        .business-tab {
+            padding: 0.75rem 1.5rem;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-weight: 500;
+            color: var(--gray);
+            transition: var(--transition);
+            border-bottom: 3px solid transparent;
+        }
+        
+        .business-tab.active {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+        }
+        
+        .business-time-section {
+            margin-top: 1rem;
+            padding: 1rem;
+            background: var(--light);
+            border-radius: var(--radius);
+            border-left: 4px solid var(--accent);
+        }
+        
+        [data-theme="dark"] .business-time-section {
+            background: #1e293b;
+        }
+        
+        .time-slots {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .time-slot {
+            background: white;
+            padding: 1rem;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            cursor: pointer;
+        }
+        
+        [data-theme="dark"] .time-slot {
+            background: #1e293b;
+        }
+        
+        .time-slot.active {
+            background: var(--gradient-accent);
+            color: white;
+            transform: translateY(-2px);
+        }
+        
+        .time-slot:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+        
         /* History Page */
         .history-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 2rem;
+            margin-bottom: 1.5rem;
             flex-wrap: wrap;
             gap: 1rem;
         }
+        
         .history-filters {
             display: flex;
             gap: 1rem;
             margin-bottom: 1.5rem;
             flex-wrap: wrap;
         }
+        
         .filter-select {
-            padding: 10px 16px;
+            padding: 10px 14px;
             border: 1px solid var(--gray-light);
             border-radius: 10px;
             background: white;
-            font-size: 0.95rem;
-            min-width: 160px;
+            font-size: 0.9rem;
+            min-width: 140px;
         }
+        
         [data-theme="dark"] .filter-select {
             background: #1e293b;
             border-color: #334155;
             color: white;
         }
+        
         .history-table-container {
             background: white;
             border-radius: var(--radius);
             box-shadow: var(--shadow);
             overflow: hidden;
             animation: fadeIn 0.5s ease;
+            overflow-x: auto;
         }
+        
         [data-theme="dark"] .history-table-container {
             background: #1e293b;
         }
+        
         .history-table {
             width: 100%;
             border-collapse: collapse;
+            min-width: 500px;
         }
+        
         .history-table th {
             background: #f8fafc;
-            padding: 1.25rem 1rem;
+            padding: 1rem 0.75rem;
             text-align: left;
             font-weight: 600;
             color: var(--dark);
             border-bottom: 1px solid var(--gray-light);
-            font-size: 0.9rem;
+            font-size: 0.8rem;
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
+        
         [data-theme="dark"] .history-table th {
             background: #1e293b;
         }
+        
         .history-table td {
-            padding: 1.25rem 1rem;
+            padding: 1rem 0.75rem;
             border-bottom: 1px solid var(--gray-light);
+            font-size: 0.9rem;
         }
+        
         .history-table tr:last-child td {
             border-bottom: none;
         }
+        
         .history-table tr:hover {
             background: #f8fafc;
         }
+        
         [data-theme="dark"] .history-table tr:hover {
             background: #1e293b;
         }
+        
         .transaction-type {
             display: inline-flex;
             align-items: center;
             gap: 6px;
-            padding: 6px 12px;
+            padding: 6px 10px;
             border-radius: 20px;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             font-weight: 500;
         }
+        
         .transaction-type.borrow {
             background: rgba(255, 71, 87, 0.1);
             color: var(--danger);
         }
+        
         .transaction-type.payback {
             background: rgba(0, 200, 150, 0.1);
             color: var(--accent);
         }
+        
         .transaction-type.business-income {
             background: rgba(0, 200, 150, 0.1);
             color: var(--accent);
         }
+        
         .transaction-type.business-expense {
             background: rgba(255, 159, 67, 0.1);
             color: var(--warning);
         }
-        .transaction-type.adjustment {
-            background: rgba(255, 159, 67, 0.1);
-            color: var(--warning);
-        }
-        .due-date-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-            padding: 4px 10px;
-            border-radius: 12px;
-            font-size: 0.75rem;
-            background: rgba(255, 159, 67, 0.1);
-            color: var(--warning);
-        }
-        .due-date-badge.overdue {
-            background: rgba(255, 71, 87, 0.1);
-            color: var(--danger);
-            animation: pulse 2s infinite;
-        }
+        
         /* Alerts Page */
         .alerts-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            grid-template-columns: 1fr;
             gap: 1.5rem;
         }
+        
         .alert-card {
             background: white;
             border-radius: var(--radius);
-            padding: 1.5rem;
+            padding: 1.25rem;
             box-shadow: var(--shadow);
             animation: zoomIn 0.5s ease;
             transition: var(--transition);
             border-left: 4px solid var(--warning);
         }
+        
         [data-theme="dark"] .alert-card {
             background: #1e293b;
         }
+        
         .alert-card.overdue {
             border-left-color: var(--danger);
         }
+        
         .alert-card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-3px);
             box-shadow: var(--shadow-lg);
         }
+        
         .alert-header {
             display: flex;
             align-items: center;
             gap: 12px;
             margin-bottom: 1rem;
         }
+        
         .alert-icon {
-            width: 44px;
-            height: 44px;
-            border-radius: 12px;
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             background: rgba(255, 159, 67, 0.1);
             color: var(--warning);
         }
+        
         .alert-card.overdue .alert-icon {
             background: rgba(255, 71, 87, 0.1);
             color: var(--danger);
         }
+        
         .alert-title {
             font-weight: 600;
             color: var(--dark);
             margin-bottom: 4px;
         }
+        
         .alert-meta {
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             color: var(--gray);
         }
+        
         .alert-amount {
-            font-size: 1.5rem;
+            font-size: 1.3rem;
             font-weight: 700;
             color: var(--dark);
             margin: 1rem 0;
         }
+        
         .alert-actions {
             display: flex;
             gap: 10px;
             margin-top: 1rem;
         }
+        
         .alert-actions .btn {
             flex: 1;
         }
+        
+        .empty-state {
+            text-align: center;
+            padding: 3rem 2rem;
+            color: var(--gray);
+        }
+        
+        .empty-state i {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+        
+        .empty-state h3 {
+            margin-bottom: 0.5rem;
+            color: var(--dark);
+        }
+        
         /* Family Overview Page */
         .users-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            grid-template-columns: 1fr;
             gap: 1.5rem;
         }
+        
         .user-card {
             background: white;
             border-radius: var(--radius);
             box-shadow: var(--shadow);
-            padding: 1.5rem;
+            padding: 1.25rem;
             animation: zoomIn 0.5s ease;
             transition: var(--transition);
             border-top: 4px solid var(--primary);
         }
+        
         [data-theme="dark"] .user-card {
             background: #1e293b;
         }
+        
         .user-card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-3px);
             box-shadow: var(--shadow-lg);
         }
+        
         .user-card-header {
             display: flex;
             align-items: center;
             gap: 12px;
             margin-bottom: 1rem;
         }
+        
         .user-avatar-small {
-            width: 50px;
-            height: 50px;
-            border-radius: 12px;
+            width: 44px;
+            height: 44px;
+            border-radius: 10px;
             background: var(--gradient);
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: bold;
             color: white;
-            font-size: 1.1rem;
+            font-size: 1rem;
         }
+        
         .user-card-info {
             flex: 1;
         }
+        
         .user-card-name {
             font-weight: 600;
             color: var(--dark);
             margin-bottom: 4px;
         }
+        
         .user-card-role {
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             color: var(--gray);
             background: var(--gray-light);
             padding: 2px 8px;
             border-radius: 12px;
             display: inline-block;
         }
+        
         .user-balance {
-            font-size: 1.8rem;
+            font-size: 1.5rem;
             font-weight: 700;
             color: var(--dark);
             margin: 1rem 0;
@@ -1000,50 +1296,47 @@
             background: var(--light);
             border-radius: 10px;
         }
+        
         [data-theme="dark"] .user-balance {
             background: #1e293b;
         }
+        
         .user-stats {
             display: flex;
             justify-content: space-between;
             margin-bottom: 1rem;
             text-align: center;
         }
+        
         .user-stat {
             flex: 1;
         }
+        
         .user-stat-value {
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             font-weight: 700;
             color: var(--dark);
         }
+        
         .user-stat-label {
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             color: var(--gray);
             margin-top: 4px;
         }
-        .adjust-balance {
-            display: flex;
-            gap: 10px;
-            margin-top: 1rem;
-        }
-        .adjust-balance input {
-            flex: 1;
-        }
+        
         /* Settings Page */
-        .settings-page {
-            padding: 1.5rem;
-        }
         .settings-card {
             background: white;
             border-radius: var(--radius);
-            padding: 1.5rem;
+            padding: 1.25rem;
             box-shadow: var(--shadow);
             margin-bottom: 1.5rem;
         }
+        
         [data-theme="dark"] .settings-card {
             background: #1e293b;
         }
+        
         .settings-card h3 {
             margin-bottom: 1rem;
             color: var(--dark);
@@ -1051,24 +1344,28 @@
             align-items: center;
             gap: 10px;
         }
+        
         .settings-group {
             margin-bottom: 1.5rem;
         }
+        
         .settings-row {
             display: flex;
+            flex-direction: column;
             gap: 1rem;
             margin-bottom: 1rem;
-            align-items: center;
         }
+        
         .settings-row .form-control {
             flex: 1;
         }
+        
         /* Toast Notification */
         .toast {
             position: fixed;
             top: 20px;
             right: 20px;
-            padding: 1rem 1.5rem;
+            padding: 1rem 1.25rem;
             background: white;
             border-radius: var(--radius);
             box-shadow: var(--shadow-lg);
@@ -1079,39 +1376,50 @@
             transform: translateX(150%);
             transition: transform 0.3s ease;
             border-left: 4px solid var(--primary);
+            max-width: 300px;
         }
+        
         [data-theme="dark"] .toast {
             background: #1e293b;
         }
+        
         .toast.show {
             transform: translateX(0);
         }
+        
         .toast.success {
             border-left-color: var(--accent);
         }
+        
         .toast.error {
             border-left-color: var(--danger);
         }
+        
         .toast.warning {
             border-left-color: var(--warning);
         }
+        
         .toast-icon {
             font-size: 1.2rem;
         }
+        
         .toast.success .toast-icon {
             color: var(--accent);
         }
+        
         .toast.error .toast-icon {
             color: var(--danger);
         }
+        
         .toast.warning .toast-icon {
             color: var(--warning);
         }
+        
         /* Alert Banner */
         .alert-banner {
             background: linear-gradient(135deg, var(--warning), #FF8A1E);
             color: white;
-            padding: 1rem 1.5rem;
+            padding: 1rem;
             border-radius: var(--radius);
             margin-bottom: 1.5rem;
             display: flex;
@@ -1120,11 +1428,13 @@
             animation: slideInDown 0.5s ease;
             box-shadow: var(--shadow);
         }
+        
         .alert-content {
             display: flex;
             align-items: center;
             gap: 12px;
         }
+        
         /* Modal */
         .modal {
             display: none;
@@ -1137,35 +1447,42 @@
             z-index: 2000;
             align-items: center;
             justify-content: center;
+            padding: 1rem;
         }
+        
         .modal.show {
             display: flex;
             animation: fadeIn 0.3s ease;
         }
+        
         .modal-content {
             background: white;
             border-radius: var(--radius);
-            padding: 2rem;
+            padding: 1.5rem;
             box-shadow: var(--shadow-lg);
-            width: 90%;
-            max-width: 500px;
+            width: 100%;
+            max-width: 400px;
             max-height: 90vh;
             overflow-y: auto;
         }
+        
         [data-theme="dark"] .modal-content {
             background: #1e293b;
         }
+        
         .modal-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 1.5rem;
         }
+        
         .modal-title {
-            font-size: 1.5rem;
+            font-size: 1.3rem;
             font-weight: 600;
             color: var(--dark);
         }
+        
         .close-modal {
             background: none;
             border: none;
@@ -1173,79 +1490,64 @@
             cursor: pointer;
             color: var(--gray);
         }
+        
         .close-modal:hover {
             color: var(--dark);
         }
-        /* Business Section */
-        .business-section {
-            margin-top: 1.5rem;
-            padding-top: 1.5rem;
-            border-top: 1px solid var(--gray-light);
-        }
-        .business-toggle {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 1rem;
-            cursor: pointer;
-            padding: 8px 0;
-        }
-        .business-toggle input {
-            display: none;
-        }
-        .business-input {
-            display: none;
-            margin-top: 1rem;
-            animation: fadeIn 0.3s ease;
-        }
-        .business-toggle input:checked ~ .business-input {
-            display: block;
-        }
+        
         /* Daily Usage Tracking */
         .usage-card {
             background: white;
             border-radius: var(--radius);
-            padding: 1.5rem;
+            padding: 1.25rem;
             box-shadow: var(--shadow);
             margin-bottom: 1.5rem;
             animation: slideInUp 0.6s ease;
         }
+        
         [data-theme="dark"] .usage-card {
             background: #1e293b;
         }
+        
         .usage-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 1rem;
         }
+        
         .usage-stats {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            grid-template-columns: repeat(2, 1fr);
             gap: 1rem;
             margin-bottom: 1.5rem;
         }
+        
         .usage-stat {
             text-align: center;
             padding: 1rem;
             background: var(--light);
             border-radius: 10px;
         }
+        
         [data-theme="dark"] .usage-stat {
             background: #1e293b;
         }
+        
         .usage-value {
-            font-size: 1.5rem;
+            font-size: 1.3rem;
             font-weight: 700;
             color: var(--dark);
             margin-bottom: 0.5rem;
         }
+        
         .usage-label {
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             color: var(--gray);
         }
+        
         .usage-chart {
-            height: 200px;
+            height: 150px;
             margin-top: 1rem;
             background: var(--light);
             border-radius: 10px;
@@ -1254,9 +1556,11 @@
             padding: 1rem;
             gap: 4px;
         }
+        
         [data-theme="dark"] .usage-chart {
             background: #1e293b;
         }
+        
         .chart-bar {
             flex: 1;
             background: var(--gradient);
@@ -1264,367 +1568,207 @@
             position: relative;
             transition: var(--transition);
         }
+        
         .chart-bar:hover {
             opacity: 0.8;
         }
+        
         .chart-label {
             position: absolute;
-            bottom: -25px;
+            bottom: -20px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            font-size: 0.7rem;
+            color: var(--gray);
+        }
+        
+        .chart-value {
+            position: absolute;
+            top: -20px;
             left: 0;
             right: 0;
             text-align: center;
             font-size: 0.75rem;
-            color: var(--gray);
-        }
-        .chart-value {
-            position: absolute;
-            top: -25px;
-            left: 0;
-            right: 0;
-            text-align: center;
-            font-size: 0.8rem;
             font-weight: 600;
         }
-        /* Enhanced business details */
-        .business-details {
-            margin-top: 1rem;
-            padding-top: 1rem;
-            border-top: 1px solid var(--gray-light);
+        
+        /* Owner Only Features */
+        .owner-only {
+            display: none;
         }
-        .business-stats {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 1rem;
-            margin-bottom: 1rem;
+        
+        .user-role-owner .owner-only {
+            display: block;
         }
-        .business-stat {
-            text-align: center;
-            padding: 1rem;
-            background: var(--light);
-            border-radius: 10px;
+        
+        /* Admin Only Features */
+        .admin-only {
+            display: none;
         }
-        [data-theme="dark"] .business-stat {
-            background: #1e293b;
+        
+        .user-role-admin .admin-only,
+        .user-role-owner .admin-only {
+            display: block;
         }
-        /* Enhanced payback details */
-        .payback-details {
-            margin-top: 1rem;
-            padding-top: 1rem;
-            border-top: 1px solid var(--gray-light);
+        
+        /* Responsive adjustments for tablets */
+        @media (min-width: 768px) {
+            .app-container {
+                flex-direction: row;
+            }
+            
+            .mobile-header {
+                display: none;
+            }
+            
+            .mobile-nav {
+                display: none;
+            }
+            
+            .sidebar {
+                width: 250px;
+                background: var(--dark);
+                color: white;
+                padding: 1.5rem 0;
+                display: flex;
+                flex-direction: column;
+                transition: var(--transition);
+                box-shadow: var(--shadow);
+                z-index: 100;
+                position: relative;
+                overflow: hidden;
+            }
+            
+            .sidebar::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                height: 4px;
+                background: var(--gradient);
+            }
+            
+            .logo {
+                display: flex;
+                align-items: center;
+                gap: 12px;
+                padding: 0 1.5rem 2rem;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            }
+            
+            .nav-links {
+                flex: 1;
+                padding: 2rem 0;
+            }
+            
+            .nav-item {
+                padding: 1rem 1.5rem;
+                display: flex;
+                align-items: center;
+                gap: 14px;
+                color: rgba(255, 255, 255, 0.7);
+                text-decoration: none;
+                transition: var(--transition);
+                border-left: 4px solid transparent;
+                margin: 4px 0;
+                position: relative;
+                border-radius: 0 12px 12px 0;
+            }
+            
+            .nav-item:hover, .nav-item.active {
+                background: rgba(255, 255, 255, 0.05);
+                color: white;
+                border-left-color: var(--primary);
+            }
+            
+            .user-profile {
+                padding: 1.5rem;
+                border-top: 1px solid rgba(255, 255, 255, 0.1);
+                display: flex;
+                align-items: center;
+                gap: 12px;
+                background: rgba(255, 255, 255, 0.03);
+            }
+            
+            .main-content {
+                flex: 1;
+                display: flex;
+                flex-direction: column;
+                overflow: auto;
+                padding: 2rem;
+            }
+            
+            .top-bar {
+                padding: 1.25rem 2rem;
+            }
+            
+            .page-title {
+                font-size: 1.6rem;
+            }
+            
+            .stats-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+            
+            .quick-actions {
+                grid-template-columns: repeat(4, 1fr);
+            }
+            
+            .actions-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .users-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .alerts-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .time-slots {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            
+            .usage-stats {
+                grid-template-columns: repeat(4, 1fr);
+            }
+            
+            .settings-row {
+                flex-direction: row;
+            }
+            
+            /* Enhanced Business Section for Desktop */
+            .business-dashboard {
+                grid-template-columns: 1fr 1fr;
+            }
+            
+            .business-summary {
+                grid-template-columns: repeat(2, 1fr);
+            }
         }
-        .payback-stats {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 1rem;
-            margin-bottom: 1rem;
+        
+        /* Responsive adjustments for larger screens */
+        @media (min-width: 1024px) {
+            .actions-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            
+            .users-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            
+            .alerts-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
         }
-        .payback-stat {
-            text-align: center;
-            padding: 1rem;
-            background: var(--light);
-            border-radius: 10px;
-        }
-        [data-theme="dark"] .payback-stat {
-            background: #1e293b;
-        }
-        /* Enhanced history filters */
-        .date-range-filter {
-            display: flex;
-            gap: 1rem;
-            align-items: center;
-        }
-        .date-input {
-            padding: 10px;
-            border: 1px solid var(--gray-light);
-            border-radius: 10px;
-            background: white;
-            font-size: 0.95rem;
-        }
-        [data-theme="dark"] .date-input {
-            background: #1e293b;
-            border-color: #334155;
-            color: white;
-        }
-        /* Reports Page */
-        .reports-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 2rem;
-        }
-        .report-card {
-            background: white;
-            border-radius: var(--radius);
-            padding: 1.5rem;
-            box-shadow: var(--shadow);
-            animation: zoomIn 0.5s ease;
-            transition: var(--transition);
-            border-top: 4px solid var(--primary);
-        }
-        [data-theme="dark"] .report-card {
-            background: #1e293b;
-        }
-        .report-card:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--shadow-lg);
-        }
-        .report-header {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 1rem;
-        }
-        .report-icon {
-            width: 44px;
-            height: 44px;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.2rem;
-            background: rgba(45, 91, 255, 0.1);
-            color: var(--primary);
-        }
-        .report-title {
-            font-weight: 600;
-            color: var(--dark);
-            margin-bottom: 4px;
-        }
-        .report-description {
-            font-size: 0.85rem;
-            color: var(--gray);
-        }
-        .report-content {
-            margin-top: 1rem;
-        }
-        .report-summary {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 1rem;
-        }
-        .report-value {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--dark);
-        }
-        .report-change {
-            display: flex;
-            align-items: center;
-            gap: 4px;
-            font-size: 0.85rem;
-            font-weight: 500;
-        }
-        .report-change.positive {
-            color: var(--accent);
-        }
-        .report-change.negative {
-            color: var(--danger);
-        }
+        
         /* Animation for new elements */
         @keyframes slideInUp {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
-        }
-        /* Mobile Menu Toggle */
-        .mobile-menu-toggle {
-            display: none;
-            background: none;
-            border: none;
-            font-size: 1.5rem;
-            color: var(--dark);
-            cursor: pointer;
-        }
-        /* Profile Section */
-        .profile-section {
-            margin-top: 1.5rem;
-            padding-top: 1.5rem;
-            border-top: 1px solid var(--gray-light);
-        }
-        .profile-avatar {
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-            background: var(--gradient);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2rem;
-            color: white;
-            margin: 0 auto 1.5rem;
-            box-shadow: var(--shadow);
-        }
-        /* Business Time Section */
-        .business-time-section {
-            margin-top: 1.5rem;
-            padding: 1.5rem;
-            background: var(--light);
-            border-radius: var(--radius);
-            border-left: 4px solid var(--accent);
-        }
-        [data-theme="dark"] .business-time-section {
-            background: #1e293b;
-        }
-        .time-slots {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1rem;
-            margin-top: 1rem;
-        }
-        .time-slot {
-            background: white;
-            padding: 1rem;
-            border-radius: 10px;
-            text-align: center;
-            box-shadow: var(--shadow);
-            transition: var(--transition);
-        }
-        [data-theme="dark"] .time-slot {
-            background: #1e293b;
-        }
-        .time-slot.active {
-            background: var(--gradient-accent);
-            color: white;
-            transform: translateY(-2px);
-        }
-        .time-slot:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-lg);
-        }
-        /* Responsive adjustments */
-        @media (max-width: 1024px) {
-            .sidebar {
-                width: 80px;
-            }
-            .logo-text, .nav-item span, .user-info {
-                display: none;
-            }
-            .logo {
-                justify-content: center;
-                padding: 0 1rem 2rem;
-            }
-            .nav-item {
-                justify-content: center;
-                padding: 1rem;
-            }
-            .user-profile {
-                justify-content: center;
-            }
-        }
-        @media (max-width: 768px) {
-            .app-container {
-                flex-direction: column;
-            }
-            .sidebar {
-                width: 100%;
-                height: auto;
-                flex-direction: row;
-                padding: 1rem;
-                position: fixed;
-                bottom: 0;
-                z-index: 100;
-            }
-            .logo {
-                padding: 0;
-                border-bottom: none;
-                display: none;
-            }
-            .nav-links {
-                padding: 0;
-                flex-direction: row;
-                flex: 1;
-                justify-content: space-around;
-            }
-            .nav-item {
-                border-left: none;
-                border-bottom: 3px solid transparent;
-                flex-direction: column;
-                padding: 0.5rem;
-                font-size: 0.8rem;
-                border-radius: 10px;
-            }
-            .nav-item.active {
-                border-left: none;
-                border-bottom-color: var(--primary);
-            }
-            .user-profile {
-                border-top: none;
-                border-left: 1px solid rgba(255, 255, 255, 0.1);
-                display: none;
-            }
-            .main-content {
-                margin-bottom: 80px;
-            }
-            .actions-grid, .stats-grid, .users-grid, .alerts-grid, .quick-actions {
-                grid-template-columns: 1fr;
-            }
-            .history-filters {
-                flex-direction: column;
-            }
-            .balance-amount {
-                font-size: 2.5rem;
-            }
-            .settings-row {
-                flex-direction: column;
-                align-items: stretch;
-            }
-            .time-display {
-                display: none;
-            }
-            .greeting {
-                display: none;
-            }
-            .usage-stats, .business-stats, .payback-stats {
-                grid-template-columns: 1fr 1fr;
-            }
-            .date-range-filter {
-                flex-direction: column;
-                align-items: stretch;
-            }
-            .reports-grid {
-                grid-template-columns: 1fr;
-            }
-            .usage-chart {
-                height: 150px;
-            }
-            .mobile-menu-toggle {
-                display: block;
-            }
-            .top-bar-actions {
-                display: none;
-            }
-            .top-bar {
-                padding: 1rem;
-            }
-            .content-area {
-                padding: 1rem;
-            }
-            .time-slots {
-                grid-template-columns: 1fr;
-            }
-        }
-        @media (max-width: 480px) {
-            .balance-card {
-                padding: 1.5rem;
-            }
-            .balance-amount {
-                font-size: 2rem;
-            }
-            .change-item {
-                font-size: 0.8rem;
-                padding: 6px 12px;
-            }
-            .usage-stats, .business-stats, .payback-stats {
-                grid-template-columns: 1fr;
-            }
-            .action-card {
-                padding: 1rem;
-            }
-            .history-table {
-                font-size: 0.8rem;
-            }
-            .history-table th, .history-table td {
-                padding: 0.75rem 0.5rem;
-            }
         }
     </style>
 </head>
@@ -1653,19 +1797,78 @@
                 </div>
                 <button type="submit" class="btn btn-block">ចូល</button>
             </form>
-            <div style="margin-top: 1.5rem; font-size: 0.9rem; color: var(--gray); text-align: left;">
-                <p><strong>ទិន្នន័យសាកល្បង:</strong></p>
-                <p>ម្ចាស់: owner / 1234</p>
-                <p>អ្នកគ្រប់គ្រង: admin / 1234</p>
-                <p>អ្នកប្រើ: user1 / 1234</p>
-            </div>
         </div>
     </div>
 
     <!-- Main App -->
     <div class="app-container" id="app-container" style="display: none;">
-        <!-- Sidebar -->
-        <div class="sidebar">
+        <!-- Mobile Header -->
+        <div class="mobile-header">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-wallet"></i>
+                </div>
+                <div class="logo-text">FamilyWallet Pro</div>
+            </div>
+            <button class="mobile-menu-toggle" id="mobile-menu-toggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+
+        <!-- Mobile Navigation -->
+        <div class="mobile-nav" id="mobile-nav">
+            <div class="mobile-nav-header">
+                <div class="logo">
+                    <div class="logo-icon">
+                        <i class="fas fa-wallet"></i>
+                    </div>
+                    <div class="logo-text">FamilyWallet Pro</div>
+                </div>
+                <button class="mobile-nav-close" id="mobile-nav-close">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="mobile-nav-links">
+                <a href="#" class="mobile-nav-item active" data-page="dashboard">
+                    <i class="fas fa-home"></i>
+                    <span>ផ្ទាំងគ្រប់គ្រង</span>
+                </a>
+                <a href="#" class="mobile-nav-item" data-page="wallet">
+                    <i class="fas fa-wallet"></i>
+                    <span>កាបូប</span>
+                </a>
+                <a href="#" class="mobile-nav-item" data-page="history">
+                    <i class="fas fa-history"></i>
+                    <span>ប្រវត្តិ</span>
+                </a>
+                <a href="#" class="mobile-nav-item admin-only" data-page="overview">
+                    <i class="fas fa-chart-pie"></i>
+                    <span>សាច់ញ្ញាប</span>
+                </a>
+                <a href="#" class="mobile-nav-item" data-page="alerts" id="alerts-nav">
+                    <i class="fas fa-bell"></i>
+                    <span>ការជូនដំណឹង</span>
+                    <span class="notification-badge" id="alert-count">0</span>
+                </a>
+                <a href="#" class="mobile-nav-item" data-page="settings">
+                    <i class="fas fa-cog"></i>
+                    <span>ការកំណត់</span>
+                </a>
+            </div>
+            <div class="mobile-user-profile">
+                <div class="user-avatar" id="user-avatar">U</div>
+                <div class="user-info">
+                    <div class="user-name" id="user-name">អ្នកប្រើ</div>
+                    <div class="user-role" id="user-role">តួនាទី</div>
+                </div>
+                <button class="logout-btn" id="logout-btn">
+                    <i class="fas fa-sign-out-alt"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Desktop Sidebar -->
+        <div class="sidebar" id="desktop-sidebar">
             <div class="logo">
                 <div class="logo-icon">
                     <i class="fas fa-wallet"></i>
@@ -1689,10 +1892,10 @@
                     <i class="fas fa-chart-pie"></i>
                     <span>សាច់ញ្ញាប</span>
                 </a>
-                <a href="#" class="nav-item" data-page="alerts" id="alerts-nav">
+                <a href="#" class="nav-item" data-page="alerts" id="alerts-nav-desktop">
                     <i class="fas fa-bell"></i>
                     <span>ការជូនដំណឹង</span>
-                    <span class="notification-badge" id="alert-count">0</span>
+                    <span class="notification-badge" id="alert-count-desktop">0</span>
                 </a>
                 <a href="#" class="nav-item" data-page="settings">
                     <i class="fas fa-cog"></i>
@@ -1700,12 +1903,12 @@
                 </a>
             </div>
             <div class="user-profile">
-                <div class="user-avatar" id="user-avatar">U</div>
+                <div class="user-avatar" id="user-avatar-desktop">U</div>
                 <div class="user-info">
-                    <div class="user-name" id="user-name">អ្នកប្រើ</div>
-                    <div class="user-role" id="user-role">តួនាទី</div>
+                    <div class="user-name" id="user-name-desktop">អ្នកប្រើ</div>
+                    <div class="user-role" id="user-role-desktop">តួនាទី</div>
                 </div>
-                <button class="logout-btn" id="logout-btn">
+                <button class="logout-btn" id="logout-btn-desktop">
                     <i class="fas fa-sign-out-alt"></i>
                 </button>
             </div>
@@ -1714,9 +1917,6 @@
         <!-- Main Content -->
         <div class="main-content">
             <div class="top-bar">
-                <button class="mobile-menu-toggle" id="mobile-menu-toggle">
-                    <i class="fas fa-bars"></i>
-                </button>
                 <h1 class="page-title" id="page-title">
                     <i class="fas fa-home"></i>
                     <span>ផ្ទាំងគ្រប់គ្រង</span>
@@ -1732,7 +1932,7 @@
                         <span>KHR (៛)</span>
                     </div>
                     <button class="btn" id="theme-toggle">
-                        <i class="fas fa-moon"></i> Dark Mode
+                        <i class="fas fa-moon"></i>
                     </button>
                 </div>
             </div>
@@ -1793,6 +1993,37 @@
                                 <div class="stat-value" id="due-transactions-dash">0</div>
                                 <div class="stat-label">ការជូនដំណឹង</div>
                             </div>
+                        </div>
+                    </div>
+
+                    <!-- Daily Usage Tracking Section -->
+                    <div class="usage-card">
+                        <div class="usage-header">
+                            <h3><i class="fas fa-chart-line"></i> ការតាមដានការប្រើប្រាស់ប្រចាំថ្ងៃ</h3>
+                            <button class="btn" id="refresh-usage-btn">
+                                <i class="fas fa-sync-alt"></i>
+                            </button>
+                        </div>
+                        <div class="usage-stats">
+                            <div class="usage-stat">
+                                <div class="usage-value" id="today-income">៛0</div>
+                                <div class="usage-label">ចំណូលថ្ងៃនេះ</div>
+                            </div>
+                            <div class="usage-stat">
+                                <div class="usage-value" id="today-expense">៛0</div>
+                                <div class="usage-label">ចំណាយថ្ងៃនេះ</div>
+                            </div>
+                            <div class="usage-stat">
+                                <div class="usage-value" id="monthly-total">៛0</div>
+                                <div class="usage-label">សរុបប្រចាំខែ</div>
+                            </div>
+                            <div class="usage-stat">
+                                <div class="usage-value" id="yearly-total">៛0</div>
+                                <div class="usage-label">សរុបប្រចាំឆ្នាំ</div>
+                            </div>
+                        </div>
+                        <div class="usage-chart" id="daily-usage-chart">
+                            <!-- Chart bars will be populated here -->
                         </div>
                     </div>
 
@@ -1912,6 +2143,7 @@
                             </div>
                         </div>
 
+                        <!-- Enhanced Business Section -->
                         <div class="action-card admin-only">
                             <h3>
                                 <div class="action-icon">
@@ -1921,50 +2153,76 @@
                             </h3>
                             <p>ការចំណាយ និងចំណូលពីអាជីវកម្ម</p>
                             
-                            <div class="business-time-section">
-                                <h4><i class="fas fa-clock"></i> ពេលវេលាអាជីវកម្ម</h4>
-                                <p>អាជីវកម្មនឹងផ្ទុកទិន្នន័យរហូតដល់ម៉ោង 12:00</p>
-                                <div class="time-slots">
-                                    <div class="time-slot" data-time="morning">
-                                        <div class="usage-value">06:00 - 12:00</div>
-                                        <div class="usage-label">ពេលព្រឹក</div>
+                            <div class="business-dashboard">
+                                <div class="business-summary">
+                                    <div class="business-stat income">
+                                        <div class="business-stat-value" id="business-income-total">៛0</div>
+                                        <div class="business-stat-label">ចំណូលសរុប</div>
                                     </div>
-                                    <div class="time-slot" data-time="afternoon">
-                                        <div class="usage-value">12:00 - 18:00</div>
-                                        <div class="usage-label">ពេលថ្ងៃត្រង់</div>
+                                    <div class="business-stat expense">
+                                        <div class="business-stat-value" id="business-expense-total">៛0</div>
+                                        <div class="business-stat-label">ចំណាយសរុប</div>
                                     </div>
-                                    <div class="time-slot" data-time="evening">
-                                        <div class="usage-value">18:00 - 24:00</div>
-                                        <div class="usage-label">ពេលល្ងាច</div>
+                                    <div class="business-stat">
+                                        <div class="business-stat-value" id="business-transactions">0</div>
+                                        <div class="business-stat-label">ប្រតិបត្តិការ</div>
+                                    </div>
+                                    <div class="business-stat">
+                                        <div class="business-stat-value" id="business-profit">៛0</div>
+                                        <div class="business-stat-label">ប្រាក់ចំណេញ</div>
                                     </div>
                                 </div>
-                            </div>
-
-                            <div class="business-section">
-                                <label class="business-toggle">
-                                    <input type="checkbox" id="business-type-toggle">
-                                    <span class="toggle-slider"></span>
-                                    <span>ប្រភេទ: <span id="business-type-label">ចំណូល</span></span>
-                                </label>
-                                <div class="business-input">
-                                    <div class="form-group">
-                                        <label for="business-amount" class="form-label">ចំនួនទឹកប្រាក់</label>
-                                        <input type="number" id="business-amount" class="form-control" min="0" step="1000" placeholder="បញ្ចូលចំនួនទឹកប្រាក់" required>
+                                
+                                <div class="business-form-container">
+                                    <div class="business-form-tabs">
+                                        <button class="business-tab active" data-type="income">ចំណូល</button>
+                                        <button class="business-tab" data-type="expense">ចំណាយ</button>
                                     </div>
-                                    <div class="form-group">
-                                        <label for="business-description" class="form-label">ការពិពណ៌នា</label>
-                                        <input type="text" id="business-description" class="form-control" placeholder="បញ្ចូលការពិពណ៌នា" required>
+                                    
+                                    <div class="business-form" id="business-income-form">
+                                        <div class="form-group">
+                                            <label for="business-income-amount" class="form-label">ចំនួនទឹកប្រាក់</label>
+                                            <input type="number" id="business-income-amount" class="form-control" min="0" step="1000" placeholder="បញ្ចូលចំនួនទឹកប្រាក់" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="business-income-description" class="form-label">ការពិពណ៌នា</label>
+                                            <input type="text" id="business-income-description" class="form-control" placeholder="បញ្ចូលការពិពណ៌នា" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="business-income-time" class="form-label">ពេលវេលា</label>
+                                            <select id="business-income-time" class="form-control">
+                                                <option value="morning">06:00 - 12:00 (ពេលព្រឹក)</option>
+                                                <option value="afternoon">12:00 - 18:00 (ពេលថ្ងៃត្រង់)</option>
+                                                <option value="evening">18:00 - 24:00 (ពេលល្ងាច)</option>
+                                            </select>
+                                        </div>
+                                        <div class="action-buttons">
+                                            <button class="btn btn-success" id="business-income-btn">បញ្ចូលចំណូល</button>
+                                        </div>
                                     </div>
-                                    <div class="form-group">
-                                        <label for="business-time" class="form-label">ពេលវេលា</label>
-                                        <select id="business-time" class="form-control">
-                                            <option value="morning">06:00 - 12:00 (ពេលព្រឹក)</option>
-                                            <option value="afternoon">12:00 - 18:00 (ពេលថ្ងៃត្រង់)</option>
-                                            <option value="evening">18:00 - 24:00 (ពេលល្ងាច)</option>
-                                        </select>
-                                    </div>
-                                    <div class="action-buttons">
-                                        <button class="btn btn-warning" id="business-btn">បញ្ចូល</button>
+                                    
+                                    <div class="business-form" id="business-expense-form" style="display: none;">
+                                        <div class="form-group">
+                                            <label for="business-expense-amount" class="form-label">ចំនួនទឹកប្រាក់</label>
+                                            <input type="number" id="business-expense-amount" class="form-control" min="0" step="1000" placeholder="បញ្ចូលចំនួនទឹកប្រាក់" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="business-expense-description" class="form-label">ការពិពណ៌នា</label>
+                                            <input type="text" id="business-expense-description" class="form-control" placeholder="បញ្ចូលការពិពណ៌នា" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="business-expense-category" class="form-label">ប្រភេទ</label>
+                                            <select id="business-expense-category" class="form-control">
+                                                <option value="materials">សម្ភារៈ</option>
+                                                <option value="transportation">ដឹកជញ្ជូន</option>
+                                                <option value="utilities">ថ្លៃសេវាកម្ម</option>
+                                                <option value="salary">ប្រាក់ខែ</option>
+                                                <option value="other">ផ្សេងៗ</option>
+                                            </select>
+                                        </div>
+                                        <div class="action-buttons">
+                                            <button class="btn btn-warning" id="business-expense-btn">បញ្ចូលចំណាយ</button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -2062,10 +2320,17 @@
                 <div class="page" id="alerts-page">
                     <div class="history-header">
                         <h2>ការជូនដំណឹងការបង់ប្រាក់</h2>
+                        <button class="btn btn-danger" id="clear-alerts-btn">
+                            <i class="fas fa-trash"></i> លុបការជូនដំណឹងទាំងអស់
+                        </button>
                     </div>
 
                     <div class="alerts-grid" id="alerts-grid">
-                        <!-- Alert cards will be populated here -->
+                        <div class="empty-state">
+                            <i class="fas fa-bell-slash"></i>
+                            <h3>គ្មានការជូនដំណឹង</h3>
+                            <p>មិនមានការបង់ប្រាក់ណាដែលត្រូវបង់ក្នុងពេលឆាប់ៗនេះទេ។</p>
+                        </div>
                     </div>
                 </div>
 
@@ -2134,6 +2399,21 @@
                             </div>
                         </div>
                     </div>
+
+                    <!-- Owner Only Settings -->
+                    <div class="settings-card owner-only">
+                        <h3><i class="fas fa-shield-alt"></i> មុខងារសម្រាប់ម្ចាស់</h3>
+                        <div class="settings-group">
+                            <div class="settings-row">
+                                <button class="btn btn-danger" id="clear-all-data-btn">
+                                    <i class="fas fa-trash"></i> លុបទិន្នន័យទាំងអស់
+                                </button>
+                                <button class="btn btn-warning" id="reset-app-btn">
+                                    <i class="fas fa-redo"></i> កំណត់ឡើងវិញ
+                                </button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -2177,6 +2457,7 @@
     <script>
         // Data initialization
         const STORAGE_KEY = 'familywallet_users';
+        const ALERTS_KEY = 'familywallet_alerts';
         
         // Initialize default users if not exists
         function initializeUsers() {
@@ -2187,22 +2468,14 @@
                         username: "owner",
                         password: "1234",
                         role: "owner",
-                        balance: 100000,
-                        history: [
-                            {
-                                date: new Date().toISOString(),
-                                type: "Initial Balance",
-                                amount: 100000,
-                                balance: 100000,
-                                description: "Initial account balance"
-                            }
-                        ]
+                        balance: 0,
+                        history: []
                     },
                     {
                         username: "admin",
                         password: "1234",
                         role: "admin",
-                        balance: 50000,
+                        balance: 0,
                         history: []
                     },
                     {
@@ -2218,14 +2491,34 @@
             return users;
         }
 
+        // Initialize alerts if not exists
+        function initializeAlerts() {
+            let alerts = JSON.parse(localStorage.getItem(ALERTS_KEY));
+            if (!alerts || alerts.length === 0) {
+                alerts = [];
+                localStorage.setItem(ALERTS_KEY, JSON.stringify(alerts));
+            }
+            return alerts;
+        }
+
         // Get users from localStorage
         function getUsers() {
             return JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
         }
 
+        // Get alerts from localStorage
+        function getAlerts() {
+            return JSON.parse(localStorage.getItem(ALERTS_KEY)) || [];
+        }
+
         // Save users to localStorage
         function saveUsers(users) {
             localStorage.setItem(STORAGE_KEY, JSON.stringify(users));
+        }
+
+        // Save alerts to localStorage
+        function saveAlerts(alerts) {
+            localStorage.setItem(ALERTS_KEY, JSON.stringify(alerts));
         }
 
         // Get current user from session
@@ -2295,13 +2588,18 @@
             document.getElementById(pageId).classList.add('active');
 
             // Update active nav link
-            document.querySelectorAll('.nav-item').forEach(link => {
+            document.querySelectorAll('.nav-item, .mobile-nav-item').forEach(link => {
                 link.classList.remove('active');
             });
             
             const targetNav = document.querySelector(`.nav-item[data-page="${pageId.replace('-page', '')}"]`);
+            const targetMobileNav = document.querySelector(`.mobile-nav-item[data-page="${pageId.replace('-page', '')}"]`);
+            
             if (targetNav) {
                 targetNav.classList.add('active');
+            }
+            if (targetMobileNav) {
+                targetMobileNav.classList.add('active');
             }
 
             // Update page title
@@ -2342,6 +2640,9 @@
             } else if (pageId === 'settings-page') {
                 updateSettingsPage();
             }
+
+            // Close mobile nav if open
+            document.getElementById('mobile-nav').classList.remove('active');
         }
 
         // Update dashboard page
@@ -2373,7 +2674,100 @@
 
                 // Update recent activities
                 updateRecentActivities(user);
+                
+                // Update daily usage tracking
+                updateDailyUsageTracking(user);
             }
+        }
+
+        // Update daily usage tracking
+        function updateDailyUsageTracking(user) {
+            const today = new Date().toDateString();
+            const currentMonth = new Date().getMonth();
+            const currentYear = new Date().getFullYear();
+            
+            let todayIncome = 0;
+            let todayExpense = 0;
+            let monthlyTotal = 0;
+            let yearlyTotal = 0;
+            
+            // Calculate daily, monthly, and yearly totals
+            user.history.forEach(transaction => {
+                const transactionDate = new Date(transaction.date);
+                
+                // Today's transactions
+                if (transactionDate.toDateString() === today) {
+                    if (transaction.amount > 0) {
+                        todayIncome += transaction.amount;
+                    } else {
+                        todayExpense += Math.abs(transaction.amount);
+                    }
+                }
+                
+                // Monthly transactions
+                if (transactionDate.getMonth() === currentMonth && 
+                    transactionDate.getFullYear() === currentYear) {
+                    monthlyTotal += Math.abs(transaction.amount);
+                }
+                
+                // Yearly transactions
+                if (transactionDate.getFullYear() === currentYear) {
+                    yearlyTotal += Math.abs(transaction.amount);
+                }
+            });
+            
+            // Update UI
+            document.getElementById('today-income').textContent = formatCurrency(todayIncome);
+            document.getElementById('today-expense').textContent = formatCurrency(todayExpense);
+            document.getElementById('monthly-total').textContent = formatCurrency(monthlyTotal);
+            document.getElementById('yearly-total').textContent = formatCurrency(yearlyTotal);
+            
+            // Update chart
+            updateUsageChart(user);
+        }
+
+        // Update usage chart
+        function updateUsageChart(user) {
+            const chartContainer = document.getElementById('daily-usage-chart');
+            chartContainer.innerHTML = '';
+            
+            // Get last 7 days of data
+            const last7Days = [];
+            for (let i = 6; i >= 0; i--) {
+                const date = new Date();
+                date.setDate(date.getDate() - i);
+                last7Days.push(date.toDateString());
+            }
+            
+            // Calculate daily totals
+            const dailyTotals = last7Days.map(day => {
+                let total = 0;
+                user.history.forEach(transaction => {
+                    if (new Date(transaction.date).toDateString() === day) {
+                        total += Math.abs(transaction.amount);
+                    }
+                });
+                return total;
+            });
+            
+            // Find max value for scaling
+            const maxValue = Math.max(...dailyTotals, 1000); // Minimum 1000 for scaling
+            
+            // Create chart bars
+            last7Days.forEach((day, index) => {
+                const dayName = new Date(day).toLocaleDateString('km-KH', { weekday: 'short' });
+                const value = dailyTotals[index];
+                const percentage = (value / maxValue) * 100;
+                
+                const bar = document.createElement('div');
+                bar.className = 'chart-bar';
+                bar.style.height = `${percentage}%`;
+                bar.innerHTML = `
+                    <div class="chart-value">${formatCurrency(value)}</div>
+                    <div class="chart-label">${dayName}</div>
+                `;
+                chartContainer.appendChild(bar);
+            });
         }
 
         // Update recent activities
@@ -2462,28 +2856,33 @@
                 document.getElementById('total-borrowed').textContent = formatCurrency(totalBorrowed);
                 document.getElementById('total-paid').textContent = formatCurrency(totalPaid);
 
-                // Update business time slots
-                updateBusinessTimeSlots();
+                // Update business dashboard
+                updateBusinessDashboard(user);
             }
         }
 
-        // Update business time slots
-        function updateBusinessTimeSlots() {
-            const currentHour = new Date().getHours();
-            const timeSlots = document.querySelectorAll('.time-slot');
-            
-            timeSlots.forEach(slot => {
-                slot.classList.remove('active');
-                const timeRange = slot.getAttribute('data-time');
-                
-                if (timeRange === 'morning' && currentHour >= 6 && currentHour < 12) {
-                    slot.classList.add('active');
-                } else if (timeRange === 'afternoon' && currentHour >= 12 && currentHour < 18) {
-                    slot.classList.add('active');
-                } else if (timeRange === 'evening' && currentHour >= 18) {
-                    slot.classList.add('active');
+        // Update business dashboard
+        function updateBusinessDashboard(user) {
+            let businessIncome = 0;
+            let businessExpense = 0;
+            let businessTransactions = 0;
+
+            user.history.forEach(transaction => {
+                if (transaction.type === 'Business Income') {
+                    businessIncome += transaction.amount;
+                    businessTransactions++;
+                } else if (transaction.type === 'Business Expense') {
+                    businessExpense += Math.abs(transaction.amount);
+                    businessTransactions++;
                 }
             });
+
+            const businessProfit = businessIncome - businessExpense;
+
+            document.getElementById('business-income-total').textContent = formatCurrency(businessIncome);
+            document.getElementById('business-expense-total').textContent = formatCurrency(businessExpense);
+            document.getElementById('business-transactions').textContent = businessTransactions;
+            document.getElementById('business-profit').textContent = formatCurrency(businessProfit);
         }
 
         // Update history page
@@ -2640,37 +3039,21 @@
 
         // Update alerts page
         function updateAlertsPage() {
-            const users = getUsers();
+            const alerts = getAlerts();
             const alertsGrid = document.getElementById('alerts-grid');
             alertsGrid.innerHTML = '';
 
-            // For demo purposes, show some sample alerts
-            const sampleAlerts = [
-                {
-                    title: "ការខ្ចីប្រាក់ពី User1",
-                    amount: 50000,
-                    dueDate: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000),
-                    status: "Due Soon"
-                },
-                {
-                    title: "ការខ្ចីប្រាក់ពី User2", 
-                    amount: 75000,
-                    dueDate: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000),
-                    status: "Overdue"
-                }
-            ];
-
             // Populate grid
-            if (sampleAlerts.length === 0) {
+            if (alerts.length === 0) {
                 alertsGrid.innerHTML = `
-                    <div class="alert-card" style="grid-column: 1 / -1; text-align: center; padding: 3rem;">
-                        <i class="fas fa-check-circle" style="font-size: 3rem; color: #10b981; margin-bottom: 1rem;"></i>
-                        <h3 style="margin-bottom: 0.5rem;">គ្មានការជូនដំណឹងការបង់ប្រាក់នៅពេលនេះ</h3>
-                        <p style="color: var(--gray);">គ្មានការខ្ចីប្រាក់ណាដែលត្រូវសងក្នុងពេលឆាប់ៗនេះទេ។</p>
+                    <div class="empty-state">
+                        <i class="fas fa-bell-slash"></i>
+                        <h3>គ្មានការជូនដំណឹង</h3>
+                        <p>មិនមានការបង់ប្រាក់ណាដែលត្រូវបង់ក្នុងពេលឆាប់ៗនេះទេ។</p>
                     </div>
                 `;
             } else {
-                sampleAlerts.forEach(alert => {
+                alerts.forEach(alert => {
                     const alertCard = document.createElement('div');
                     const statusClass = alert.status === 'Overdue' ? 'overdue' : '';
                     const statusText = alert.status === 'Overdue' ? 'ហួសកាលបរិច្ឆេទ' : 'ត្រូវសងឆាប់';
@@ -2689,14 +3072,61 @@
                         <div class="alert-amount">${formatCurrency(alert.amount)}</div>
                         <div class="alert-meta">កាលបរិច្ឆេទសង: ${formatDate(alert.dueDate)}</div>
                         <div class="alert-actions">
-                            <button class="btn btn-success">
+                            <button class="btn btn-success mark-paid-btn" data-id="${alert.id}">
                                 <i class="fas fa-check"></i> សម្គាល់ថាបានបង់
                             </button>
                         </div>
                     `;
                     alertsGrid.appendChild(alertCard);
                 });
+
+                // Add event listeners to mark paid buttons
+                document.querySelectorAll('.mark-paid-btn').forEach(button => {
+                    button.addEventListener('click', function() {
+                        const alertId = this.getAttribute('data-id');
+                        markAlertAsPaid(alertId);
+                    });
+                });
             }
+
+            // Update alert count
+            const alertCount = alerts.length;
+            document.getElementById('alert-count').textContent = alertCount;
+            document.getElementById('alert-count-desktop').textContent = alertCount;
+        }
+
+        // Mark alert as paid
+        function markAlertAsPaid(alertId) {
+            const alerts = getAlerts();
+            const updatedAlerts = alerts.filter(alert => alert.id !== alertId);
+            saveAlerts(updatedAlerts);
+            updateAlertsPage();
+            showToast('បានសម្គាល់ការជូនដំណឹងថាបានបង់រួច');
+        }
+
+        // Clear all alerts
+        function clearAllAlerts() {
+            if (confirm('តើអ្នកពិតជាចង់លុបការជូនដំណឹងទាំងអស់មែនទេ?')) {
+                saveAlerts([]);
+                updateAlertsPage();
+                showToast('បានលុបការជូនដំណឹងទាំងអស់');
+            }
+        }
+
+        // Add alert
+        function addAlert(title, amount, dueDate, status = 'Due Soon') {
+            const alerts = getAlerts();
+            const newAlert = {
+                id: Date.now().toString(),
+                title,
+                amount,
+                dueDate,
+                status,
+                createdAt: new Date().toISOString()
+            };
+            alerts.push(newAlert);
+            saveAlerts(alerts);
+            updateAlertsPage();
         }
 
         // Update settings page
@@ -2710,6 +3140,11 @@
             // Show/hide admin-only sections
             document.querySelectorAll('.admin-only').forEach(el => {
                 el.style.display = (currentUser.role === 'owner' || currentUser.role === 'admin') ? 'block' : 'none';
+            });
+
+            // Show/hide owner-only sections
+            document.querySelectorAll('.owner-only').forEach(el => {
+                el.style.display = (currentUser.role === 'owner') ? 'block' : 'none';
             });
 
             // Update users list for admin/owner
@@ -2812,6 +3247,9 @@
                     document.getElementById('user-name').textContent = newUsername;
                     document.getElementById('user-role').textContent = newRole === 'admin' ? 'អ្នកគ្រប់គ្រង' : 'អ្នកប្រើ';
                     document.getElementById('user-avatar').textContent = newUsername.charAt(0).toUpperCase();
+                    document.getElementById('user-name-desktop').textContent = newUsername;
+                    document.getElementById('user-role-desktop').textContent = newRole === 'admin' ? 'អ្នកគ្រប់គ្រង' : 'អ្នកប្រើ';
+                    document.getElementById('user-avatar-desktop').textContent = newUsername.charAt(0).toUpperCase();
                 }
 
                 closeUserManagementModal();
@@ -2861,6 +3299,13 @@
 
                 if (dueDate) {
                     transaction.dueDate = dueDate;
+                    // Add alert for due date
+                    addAlert(
+                        `ការខ្ចីប្រាក់ពី ${borrowerName}`,
+                        amount,
+                        dueDate,
+                        new Date(dueDate) < new Date() ? 'Overdue' : 'Due Soon'
+                    );
                 }
 
                 users[userIndex].history.push(transaction);
@@ -2913,8 +3358,8 @@
             }
         }
 
-        // Business transaction
-        function businessTransaction(amount, description, isIncome = true, timeSlot = 'morning') {
+        // Business income transaction
+        function businessIncomeTransaction(amount, description, timeSlot = 'morning') {
             const currentUser = getCurrentUser();
             if (!currentUser || (currentUser.role !== 'owner' && currentUser.role !== 'admin')) return;
 
@@ -2922,21 +3367,13 @@
             const userIndex = users.findIndex(u => u.username === currentUser.username);
 
             if (userIndex !== -1) {
-                if (isIncome) {
-                    users[userIndex].balance += amount;
-                } else {
-                    if (amount > users[userIndex].balance) {
-                        showToast('ចំនួនទឹកប្រាក់ចំណាយលើសសមតុល្យបច្ចុប្បន្ន', 'error');
-                        return;
-                    }
-                    users[userIndex].balance -= amount;
-                }
+                users[userIndex].balance += amount;
 
                 // Add to history
                 users[userIndex].history.push({
                     date: new Date().toISOString(),
-                    type: isIncome ? 'Business Income' : 'Business Expense',
-                    amount: isIncome ? amount : -amount,
+                    type: 'Business Income',
+                    amount: amount,
                     balance: users[userIndex].balance,
                     description: description,
                     timeSlot: timeSlot
@@ -2947,7 +3384,43 @@
                 updateWalletPage();
                 updateDashboardPage();
 
-                const message = `${isIncome ? 'បានបញ្ចូលចំណូល' : 'បានចំណាយ'} ${formatCurrency(amount)} ពីអាជីវកម្ម: ${description}`;
+                const message = `បានបញ្ចូលចំណូល ${formatCurrency(amount)} ពីអាជីវកម្ម: ${description}`;
+                showToast(message);
+            }
+        }
+
+        // Business expense transaction
+        function businessExpenseTransaction(amount, description, category = 'other') {
+            const currentUser = getCurrentUser();
+            if (!currentUser || (currentUser.role !== 'owner' && currentUser.role !== 'admin')) return;
+
+            const users = getUsers();
+            const userIndex = users.findIndex(u => u.username === currentUser.username);
+
+            if (userIndex !== -1) {
+                if (amount > users[userIndex].balance) {
+                    showToast('ចំនួនទឹកប្រាក់ចំណាយលើសសមតុល្យបច្ចុប្បន្ន', 'error');
+                    return;
+                }
+
+                users[userIndex].balance -= amount;
+
+                // Add to history
+                users[userIndex].history.push({
+                    date: new Date().toISOString(),
+                    type: 'Business Expense',
+                    amount: -amount,
+                    balance: users[userIndex].balance,
+                    description: description,
+                    category: category
+                });
+
+                saveUsers(users);
+                setCurrentUser(users[userIndex]);
+                updateWalletPage();
+                updateDashboardPage();
+
+                const message = `បានចំណាយ ${formatCurrency(amount)} ពីអាជីវកម្ម: ${description}`;
                 showToast(message);
             }
         }
@@ -3017,6 +3490,8 @@
                 document.getElementById('user-name').textContent = newUsername;
                 document.getElementById('user-avatar').textContent = newUsername.charAt(0).toUpperCase();
                 document.getElementById('profile-avatar').textContent = newUsername.charAt(0).toUpperCase();
+                document.getElementById('user-name-desktop').textContent = newUsername;
+                document.getElementById('user-avatar-desktop').textContent = newUsername.charAt(0).toUpperCase();
                 document.getElementById('change-username').value = '';
 
                 showToast('បានផ្លាស់ប្តូរឈ្មោះអ្នកប្រើដោយជោគជ័យ');
@@ -3073,10 +3548,44 @@
             showToast('បានបន្ថែមអ្នកប្រើថ្មីដោយជោគជ័យ');
         }
 
+        // Clear all data (owner only)
+        function clearAllData() {
+            if (confirm('តើអ្នកពិតជាចង់លុបទិន្នន័យទាំងអស់មែនទេ? សកម្មភាពនេះមិនអាចត្រឡប់ក្រោយបានទេ។')) {
+                localStorage.removeItem(STORAGE_KEY);
+                localStorage.removeItem(ALERTS_KEY);
+                localStorage.removeItem('currentUser');
+                localStorage.removeItem('theme');
+                
+                // Reset to default users
+                initializeUsers();
+                initializeAlerts();
+                
+                // Redirect to login page
+                document.getElementById('login-page').style.display = 'flex';
+                document.getElementById('app-container').style.display = 'none';
+                
+                showToast('បានលុបទិន្នន័យទាំងអស់ដោយជោគជ័យ');
+            }
+        }
+
+        // Reset app to default state (owner only)
+        function resetApp() {
+            if (confirm('តើអ្នកពិតជាចង់កំណត់កម្មវិធីឡើងវិញមែនទេ? សកម្មភាពនេះនឹងលុបទិន្នន័យទាំងអស់។')) {
+                localStorage.clear();
+                
+                // Redirect to login page
+                document.getElementById('login-page').style.display = 'flex';
+                document.getElementById('app-container').style.display = 'none';
+                
+                showToast('បានកំណត់កម្មវិធីឡើងវិញដោយជោគជ័យ');
+            }
+        }
+
         // Initialize the app
         function initApp() {
-            // Initialize users
+            // Initialize users and alerts
             initializeUsers();
+            initializeAlerts();
             
             // Start time display
             updateTime();
@@ -3088,6 +3597,9 @@
                 document.getElementById('user-name').textContent = currentUser.username;
                 document.getElementById('user-role').textContent = currentUser.role === 'owner' ? 'ម្ចាស់' : currentUser.role === 'admin' ? 'អ្នកគ្រប់គ្រង' : 'អ្នកប្រើ';
                 document.getElementById('user-avatar').textContent = currentUser.username.charAt(0).toUpperCase();
+                document.getElementById('user-name-desktop').textContent = currentUser.username;
+                document.getElementById('user-role-desktop').textContent = currentUser.role === 'owner' ? 'ម្ចាស់' : currentUser.role === 'admin' ? 'អ្នកគ្រប់គ្រង' : 'អ្នកប្រើ';
+                document.getElementById('user-avatar-desktop').textContent = currentUser.username.charAt(0).toUpperCase();
 
                 document.getElementById('login-page').style.display = 'none';
                 document.getElementById('app-container').style.display = 'flex';
@@ -3096,6 +3608,11 @@
                 document.querySelectorAll('.admin-only').forEach(el => {
                     el.style.display = (currentUser.role === 'owner' || currentUser.role === 'admin') ? 'flex' : 'none';
                 });
+
+                // Add owner class to body for owner-only features
+                if (currentUser.role === 'owner') {
+                    document.body.classList.add('user-role-owner');
+                }
 
                 updateDashboardPage();
             } else {
@@ -3118,6 +3635,9 @@
                     document.getElementById('user-name').textContent = user.username;
                     document.getElementById('user-role').textContent = user.role === 'owner' ? 'ម្ចាស់' : user.role === 'admin' ? 'អ្នកគ្រប់គ្រង' : 'អ្នកប្រើ';
                     document.getElementById('user-avatar').textContent = user.username.charAt(0).toUpperCase();
+                    document.getElementById('user-name-desktop').textContent = user.username;
+                    document.getElementById('user-role-desktop').textContent = user.role === 'owner' ? 'ម្ចាស់' : user.role === 'admin' ? 'អ្នកគ្រប់គ្រង' : 'អ្នកប្រើ';
+                    document.getElementById('user-avatar-desktop').textContent = user.username.charAt(0).toUpperCase();
 
                     document.getElementById('login-page').style.display = 'none';
                     document.getElementById('app-container').style.display = 'flex';
@@ -3126,6 +3646,11 @@
                     document.querySelectorAll('.admin-only').forEach(el => {
                         el.style.display = (user.role === 'owner' || user.role === 'admin') ? 'flex' : 'none';
                     });
+
+                    // Add owner class to body for owner-only features
+                    if (user.role === 'owner') {
+                        document.body.classList.add('user-role-owner');
+                    }
 
                     updateDashboardPage();
                     showToast(`សូមស្វាគមន៍ការត្រឡប់មកវិញ, ${user.username}!`);
@@ -3142,13 +3667,31 @@
                 showToast('បានចាកចេញដោយជោគជ័យ');
             });
 
+            // Desktop logout button
+            document.getElementById('logout-btn-desktop').addEventListener('click', function() {
+                clearCurrentUser();
+                document.getElementById('login-page').style.display = 'flex';
+                document.getElementById('app-container').style.display = 'none';
+                showToast('បានចាកចេញដោយជោគជ័យ');
+            });
+
             // Navigation
-            document.querySelectorAll('.nav-item').forEach(link => {
+            document.querySelectorAll('.nav-item, .mobile-nav-item').forEach(link => {
                 link.addEventListener('click', function(e) {
                     e.preventDefault();
                     const pageId = this.getAttribute('data-page') + '-page';
                     navigateTo(pageId);
                 });
+            });
+
+            // Mobile menu toggle
+            document.getElementById('mobile-menu-toggle').addEventListener('click', function() {
+                document.getElementById('mobile-nav').classList.add('active');
+            });
+
+            // Mobile nav close
+            document.getElementById('mobile-nav-close').addEventListener('click', function() {
+                document.getElementById('mobile-nav').classList.remove('active');
             });
 
             // Quick actions
@@ -3219,17 +3762,26 @@
                 document.getElementById('payback-name').value = '';
             });
 
-            // Business actions
-            document.getElementById('business-type-toggle').addEventListener('change', function() {
-                const isIncome = !this.checked;
-                document.getElementById('business-type-label').textContent = isIncome ? 'ចំណូល' : 'ចំណាយ';
+            // Business form tabs
+            document.querySelectorAll('.business-tab').forEach(tab => {
+                tab.addEventListener('click', function() {
+                    const type = this.getAttribute('data-type');
+                    
+                    // Update active tab
+                    document.querySelectorAll('.business-tab').forEach(t => t.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // Show corresponding form
+                    document.getElementById('business-income-form').style.display = type === 'income' ? 'block' : 'none';
+                    document.getElementById('business-expense-form').style.display = type === 'expense' ? 'block' : 'none';
+                });
             });
 
-            document.getElementById('business-btn').addEventListener('click', function() {
-                const amount = parseFloat(document.getElementById('business-amount').value) || 0;
-                const description = document.getElementById('business-description').value.trim();
-                const isIncome = !document.getElementById('business-type-toggle').checked;
-                const timeSlot = document.getElementById('business-time').value;
+            // Business income action
+            document.getElementById('business-income-btn').addEventListener('click', function() {
+                const amount = parseFloat(document.getElementById('business-income-amount').value) || 0;
+                const description = document.getElementById('business-income-description').value.trim();
+                const timeSlot = document.getElementById('business-income-time').value;
 
                 if (amount <= 0) {
                     showToast('សូមបញ្ចូលចំនួនទឹកប្រាក់ត្រឹមត្រូវ', 'error');
@@ -3241,9 +3793,30 @@
                     return;
                 }
 
-                businessTransaction(amount, description, isIncome, timeSlot);
-                document.getElementById('business-amount').value = '';
-                document.getElementById('business-description').value = '';
+                businessIncomeTransaction(amount, description, timeSlot);
+                document.getElementById('business-income-amount').value = '';
+                document.getElementById('business-income-description').value = '';
+            });
+
+            // Business expense action
+            document.getElementById('business-expense-btn').addEventListener('click', function() {
+                const amount = parseFloat(document.getElementById('business-expense-amount').value) || 0;
+                const description = document.getElementById('business-expense-description').value.trim();
+                const category = document.getElementById('business-expense-category').value;
+
+                if (amount <= 0) {
+                    showToast('សូមបញ្ចូលចំនួនទឹកប្រាក់ត្រឹមត្រូវ', 'error');
+                    return;
+                }
+
+                if (!description) {
+                    showToast('សូមបញ្ចូលការពិពណ៌នា', 'error');
+                    return;
+                }
+
+                businessExpenseTransaction(amount, description, category);
+                document.getElementById('business-expense-amount').value = '';
+                document.getElementById('business-expense-description').value = '';
             });
 
             // Export buttons
@@ -3257,6 +3830,9 @@
                 document.getElementById('alert-banner').style.display = 'none';
             });
 
+            // Clear alerts button
+            document.getElementById('clear-alerts-btn').addEventListener('click', clearAllAlerts);
+
             // Set minimum date for due date to today
             const today = new Date().toISOString().split('T')[0];
             document.getElementById('borrow-due-date').min = today;
@@ -3266,20 +3842,14 @@
                 const isDark = document.body.getAttribute('data-theme') === 'dark';
                 document.body.setAttribute('data-theme', isDark ? 'light' : 'dark');
                 localStorage.setItem('theme', isDark ? 'light' : 'dark');
-                this.innerHTML = isDark ? '<i class="fas fa-moon"></i> Dark Mode' : '<i class="fas fa-sun"></i> Light Mode';
+                this.innerHTML = isDark ? '<i class="fas fa-moon"></i>' : '<i class="fas fa-sun"></i>';
             });
 
             // Initialize theme
             if (localStorage.getItem('theme') === 'dark') {
                 document.body.setAttribute('data-theme', 'dark');
-                document.getElementById('theme-toggle').innerHTML = '<i class="fas fa-sun"></i> Light Mode';
+                document.getElementById('theme-toggle').innerHTML = '<i class="fas fa-sun"></i>';
             }
-
-            // Mobile menu toggle
-            document.getElementById('mobile-menu-toggle').addEventListener('click', function() {
-                const sidebar = document.querySelector('.sidebar');
-                sidebar.classList.toggle('mobile-open');
-            });
 
             // Profile management
             document.getElementById('change-username-btn').addEventListener('click', function() {
@@ -3322,17 +3892,22 @@
             // Modal close button
             document.getElementById('close-user-modal').addEventListener('click', closeUserManagementModal);
 
-            // Time slot selection
-            document.querySelectorAll('.time-slot').forEach(slot => {
-                slot.addEventListener('click', function() {
-                    const timeValue = this.getAttribute('data-time');
-                    document.getElementById('business-time').value = timeValue;
-                    
-                    // Update active state
-                    document.querySelectorAll('.time-slot').forEach(s => s.classList.remove('active'));
-                    this.classList.add('active');
-                });
+            // Refresh usage button
+            document.getElementById('refresh-usage-btn').addEventListener('click', function() {
+                const currentUser = getCurrentUser();
+                if (currentUser) {
+                    const users = getUsers();
+                    const user = users.find(u => u.username === currentUser.username);
+                    if (user) {
+                        updateDailyUsageTracking(user);
+                        showToast('បានធ្វើឱ្យទិន្នន័យការប្រើប្រាស់ទាន់សម័យ');
+                    }
+                }
             });
+
+            // Owner-only features
+            document.getElementById('clear-all-data-btn').addEventListener('click', clearAllData);
+            document.getElementById('reset-app-btn').addEventListener('click', resetApp);
         }
 
         // Initialize the app when DOM is loaded
